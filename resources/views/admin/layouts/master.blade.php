@@ -56,7 +56,7 @@
                 <nav class="navbar-sidebar">
                     <ul class="list-unstyled navbar__list">
                         <li class="active has-sub">
-                            <a class="js-arrow" href="{{ route('category#list') }}">
+                            <a class="js-arrow text-decoration-none" href="{{ route('category#list') }}">
                                 <i class="fa-solid fa-list-ul"></i> Category
                             </a>
                         </li>
@@ -74,12 +74,7 @@
                     <div class="section__content section__content--p30">
                         <div class="container-fluid">
                             <div class="header-wrap">
-                                <form class="form-header" action="" method="POST">
-                                    <input class="au-input au-input--xl" type="text" name="search" placeholder="Search for datas &amp; reports..." />
-                                    <button class="au-btn--submit" type="submit">
-                                        <i class="zmdi zmdi-search"></i>
-                                    </button>
-                                </form>
+                                @yield('searchbar')
                                 <div class="header-button">
                                     <div class="noti-wrap">
                                         <div class="noti__item js-item-menu">
@@ -128,7 +123,7 @@
                                                 <img src="{{ asset('admin/images/icon/avatar-01.jpg') }}" alt="John Doe" />
                                             </div>
                                             <div class="content">
-                                                <a class="js-acc-btn" href="#">{{ Auth::user()->username }}</a>
+                                                <a class="js-acc-btn text-decoration-none" href="#">{{ Auth::user()->username }}</a>
                                             </div>
                                             <div class="account-dropdown js-dropdown">
                                                 <div class="info clearfix">
@@ -139,14 +134,14 @@
                                                     </div>
                                                     <div class="content">
                                                         <h5 class="name">
-                                                            <a href="#">{{ Auth::user()->username }}</a>
+                                                            <a href="#" class="text-decoration-none">{{ Auth::user()->username }}</a>
                                                         </h5>
                                                         <span class="email">{{ Auth::user()->email }}</span>
                                                     </div>
                                                 </div>
                                                 <div class="account-dropdown__body">
                                                     <div class="account-dropdown__item">
-                                                        <a href="#">
+                                                        <a href="#" class="text-decoration-none">
                                                             <i class="zmdi zmdi-account"></i>Account</a>
                                                     </div>
                                                 </div>

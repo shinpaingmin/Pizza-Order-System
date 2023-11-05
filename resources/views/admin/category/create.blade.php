@@ -2,6 +2,16 @@
 
 @section('title', 'Category List')
 
+@section('searchbar')
+    <form class="form-header" action="{{ route('category#list') }}" method="GET">
+        @csrf
+        <input class="au-input au-input--xl" type="text" name="searchKey" placeholder="Search for category..." value="{{ request('searchKey') }}"/>
+        <button class="au-btn--submit" type="submit">
+            <i class="zmdi zmdi-search"></i>
+        </button>
+    </form>
+@endsection
+
 @section('content')
     <!-- MAIN CONTENT-->
     <div class="main-content">
