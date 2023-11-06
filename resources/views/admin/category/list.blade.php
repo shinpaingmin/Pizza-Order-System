@@ -75,6 +75,18 @@
                         </div>
                     @endif
 
+                    @if (session('updateSuccess'))
+                        <div class="col-4 offset-8">
+                            <div class="alert alert-success d-flex align-items-center alert-dismissible fade show" id="alert" role="alert">
+                                <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>
+                                <div class="mx-4">
+                                    {{ session('updateSuccess') }}
+                                </div>
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        </div>
+                    @endif
+
                     <div class="table-responsive table-responsive-data2">
                         <table class="table table-data2">
                             <thead>
@@ -101,9 +113,10 @@
                                                 <button class="item mr-4" data-toggle="tooltip" data-placement="top" title="Send">
                                                     <i class="zmdi zmdi-mail-send"></i>
                                                 </button>
-                                                <button class="item mr-4" data-toggle="tooltip" data-placement="top" title="Edit">
+                                                <a class="item mr-4" data-toggle="tooltip" data-placement="top" title="Edit"
+                                                href="{{ route('category#editPage', $category->category_id) }}">
                                                     <i class="zmdi zmdi-edit"></i>
-                                                </button>
+                                                </a>
                                                 <a class="item mr-4 cursor-pointer" data-toggle="tooltip" data-placement="top" title="Delete"
                                                 href="{{ route('category#delete', $category->category_id) }}">
                                                     <i class="zmdi zmdi-delete"></i>

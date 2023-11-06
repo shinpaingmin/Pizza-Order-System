@@ -24,7 +24,7 @@ class CategoryController extends Controller
         return view('admin.category.create');
     }
 
-    // create new category
+    // create new category function
     public function create(Request $request) {
         $this->categoryValidation($request);
         $data = $this->requestCategoryData($request);
@@ -34,7 +34,7 @@ class CategoryController extends Controller
         return redirect()->route('category#list')->with(['createSuccess' => 'Added Successfully!']);
     }
 
-    // delete category
+    // delete category function
     public function delete($id) {
         if($id) {
             Category::where('category_id', $id)->delete();
@@ -42,11 +42,26 @@ class CategoryController extends Controller
 
         return redirect()->route('category#list')->with(['deleteSuccess' => 'Deleted Successfully!']);
     }
+    // direct edit page
+    public function editPage($id) {
+        $category = Category::where('category_id', $id)->first();
+        return view('admin.category.edit', compact('category'));
+    }
+
+    // update category function
+    public function update($id, Request $request) {
+        // dd($request->all());
+        $this->categoryValidation($request, $id);
+        $data = $this->requestCategoryData($request);
+
+        Category::where('category_id', $id)->update($data);
+        return redirect()->route('category#list')->with(['updateSuccess' => 'Updated Successfully!']);
+    }
 
     // category validation
-    private function categoryValidation($request) {
+    private function categoryValidation($request, $id = "") {
         Validator::make($request->all(), [
-            'categoryName' => 'required|unique:categories,category_name'
+            'categoryName' => 'required|min:4|unique:categories,category_name,' . $id . ',category_id'
         ])->validate();
     }
 
