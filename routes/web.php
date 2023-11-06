@@ -21,24 +21,32 @@ Route::get('loginPage', [AuthController::class, 'loginPage'])->name('auth#loginP
 Route::get('registerPage', [AuthController::class, 'registerPage'])->name('auth#registerPage');
 
 Route::middleware([
-    'auth:sanctum',
-    config('jetstream.auth_session'),
-    'verified',
+    'auth'
 ])->group(function () {
     // dashboard
     Route::get('dashboard', [AuthController::class, 'dashboard'])->name('dashboard');
 
     // admin
-    // category
-    Route::group([
-        'prefix' => 'category',
-        'middleware' => 'admin_auth'
-        ], function() {
-        Route::get('/list', [CategoryController::class, 'list'])->name('category#list');
-        Route::get('/create/page', [CategoryController::class, 'createPage'])->name('category#createPage');
-        Route::post('/create', [CategoryController::class, 'create'])->name('category#create');
-        Route::get('/delete/{id}', [CategoryController::class, 'delete'])->name('category#delete');
+    Route::middleware(['admin_auth'])->group(function() {
+        // category
+        Route::prefix('category')->group(function() {
+            Route::get('/list', [CategoryController::class, 'list'])->name('category#list');
+            Route::get('/create/page', [CategoryController::class, 'createPage'])->name('category#createPage');
+            Route::post('/create', [CategoryController::class, 'create'])->name('category#create');
+            Route::get('/delete/{id}', [CategoryController::class, 'delete'])->name('category#delete');
+            Route::get('/edit/page/{id}', [CategoryController::class, 'editPage'])->name('category#editPage');
+            Route::post('/update/{id}', [CategoryController::class, 'update'])->name('category#update');
+        });
+
+        // profile
+        Route::prefix('admin')->group(function() {
+            Route::get('/changePassword/page', [AuthController::class, 'changePasswordPage'])->name('admin#changePasswordPage');
+            Route::post('/change/password', [AuthController::class, 'changePassword'])->name('admin#changePassword');
+        });
     });
+
+
+
 
     // user
     // home
