@@ -8,18 +8,22 @@
             @csrf
             <div class="form-group">
                 <label>Email Address</label>
-                <input class="au-input au-input--full" type="email" name="email" placeholder="Email">
+                <input class="au-input au-input--full form-control @error('email') is-invalid @enderror" type="email" name="email" placeholder="Email">
             </div>
             @error('email')
-                <small class="text-danger">{{ $message }}</small>
+                <div class="mb-4">
+                    <small class="text-danger">{{ $message }}</small>
+                </div>
             @enderror
 
             <div class="form-group">
                 <label>Password</label>
-                <input class="au-input au-input--full" type="password" name="password" placeholder="Password">
+                <input class="au-input au-input--full form-control @error('password') is-invalid @enderror" type="password" name="password" placeholder="Password">
             </div>
             @error('password')
-                <small class="text-danger">{{ $message }}</small>
+                <div class="mb-4">
+                    <small class="text-danger">{{ $message }}</small>
+                </div>
             @enderror
 
             <button class="au-btn au-btn--block au-btn--green m-b-20" type="submit">sign in</button>
@@ -28,7 +32,7 @@
         <div class="register-link">
             <p>
                 Don't you have account?
-                <a href="{{ route('auth#registerPage') }}">Sign Up Here</a>
+                <a href="{{ route('auth#registerPage') }}" class="text-decoration-none">Sign Up Here</a>
             </p>
         </div>
     </div>
