@@ -17,9 +17,12 @@ use App\Http\Controllers\CategoryController;
 */
 
 // login, register
-Route::redirect('/', 'loginPage');
-Route::get('loginPage', [AuthController::class, 'loginPage'])->name('auth#loginPage');
-Route::get('registerPage', [AuthController::class, 'registerPage'])->name('auth#registerPage');
+Route::middleware(['admin_auth'])->group(function() {
+    Route::redirect('/', 'loginPage');
+    Route::get('loginPage', [AuthController::class, 'loginPage'])->name('auth#loginPage');
+    Route::get('registerPage', [AuthController::class, 'registerPage'])->name('auth#registerPage');
+});
+
 
 Route::middleware([
     'auth'
@@ -45,6 +48,7 @@ Route::middleware([
             Route::post('/change/password', [AdminController::class, 'changePassword'])->name('admin#changePassword');
             Route::get('/profile/details', [AdminController::class, 'details'])->name('admin#details');
             Route::get('/profile/edit', [AdminController::class, 'edit'])->name('admin#edit');
+            Route::post('/profile/update/{id}', [AdminController::class, 'update'])->name('admin#update');
         });
     });
 
