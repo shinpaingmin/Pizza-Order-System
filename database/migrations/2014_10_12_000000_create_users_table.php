@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('image')->nullable();
             $table->string('phone', 15);
             $table->string('address');
+            $table->string('gender', 10);
             $table->string('role', 15)->default('user');
             $table->string('password');
 
