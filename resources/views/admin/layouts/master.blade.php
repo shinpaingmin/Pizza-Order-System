@@ -120,10 +120,12 @@
                                     <div class="account-wrap">
                                         <div class="account-item clearfix js-item-menu">
                                             <div class="image">
-                                                @if (empty(Auth::user()->image))
-                                                    <img src="{{ asset('image/user.png') }}" alt="Profile" class="img-thumbnail"/>
+                                                @if (empty(Auth::user()->image) && Auth::user()->gender === 'male')
+                                                    <img src="{{ asset('image/male.png') }}" alt="Profile" class="img-thumbnail"/>
+                                                @elseif (empty(Auth::user()->image) && Auth::user()->gender === 'female')
+                                                    <img src="{{ asset('image/female.png') }}" alt="Profile" class="img-thumbnail"/>
                                                 @else
-                                                    <img src="{{ Auth::user()->image }}" alt="Profile" />
+                                                    <img src="{{ asset('storage/' . Auth::user()->image) }}" alt="Profile" class="img-thumbnail"/>
                                                 @endif
                                             </div>
                                             <div class="content">
@@ -133,10 +135,12 @@
                                                 <div class="info clearfix">
                                                     <div class="image">
                                                         <a href="{{ route('admin#details') }}">
-                                                            @if (empty(Auth::user()->image))
-                                                                <img src="{{ asset('image/user.png') }}" alt="Profile" class="img-thumbnail"/>
+                                                            @if (empty(Auth::user()->image) && Auth::user()->gender === 'male')
+                                                                <img src="{{ asset('image/male.png') }}" alt="Profile" class="img-thumbnail"/>
+                                                            @elseif (empty(Auth::user()->image) && Auth::user()->gender === 'female')
+                                                                <img src="{{ asset('image/female.png') }}" alt="Profile" class="img-thumbnail"/>
                                                             @else
-                                                                <img src="{{ Auth::user()->image }}" alt="Profile" />
+                                                                <img src="{{ asset('storage/' . Auth::user()->image) }}" alt="Profile" class="img-thumbnail"/>
                                                             @endif
                                                         </a>
                                                     </div>

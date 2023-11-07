@@ -18,6 +18,7 @@
     <div class="main-content">
         <div class="section__content section__content--p30">
             <div class="container-fluid">
+
                 <div class="col-lg-10 offset-1">
                     <div class="card">
                         <div class="card-body">
@@ -26,17 +27,28 @@
                             </div>
                             <hr>
 
-                            <form action="">
+                            <form action="{{ route('admin#update', Auth::user()->id) }}" method="post" enctype="multipart/form-data">
+                                @csrf
                                 <div class="row my-4">
-                                    <div class="col-6 offset-4" style="width: 300px">
-                                        @if (empty(Auth::user()->image))
-                                        <img src="{{ asset('image/user.png') }}" alt="Profile" class="img-thumbnail shadow-sm w-100"/>
-                                        @else
-                                            <img src="{{ Auth::user()->image }}" alt="Profile" />
-                                        @endif
-
+                                    <div class="col-6 offset-4" style="">
+                                        <div style="width: 250px; height: 250px" class="overflow-hidden">
+                                            @if (empty(Auth::user()->image) && Auth::user()->gender === 'male')
+                                                <img src="{{ asset('image/male.png') }}" alt="Profile" class="object-cover" style="object-position: center !important"/>
+                                            @elseif (empty(Auth::user()->image) && Auth::user()->gender === 'female')
+                                                <img src="{{ asset('image/female.png') }}" alt="Profile" class="object-cover" style="object-position: center !important"/>
+                                            @else
+                                                <img src="{{ asset('storage/' . Auth::user()->image) }}" alt="Profile" class="object-cover" style="object-position: center !important"/>
+                                            @endif
+                                        </div>
                                         <input type="file" name="image" class="mt-4 cursor-pointer">
+
+                                        @error('image')
+                                            <div class="invalid-feedback d-inline-block mb-4">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
                                     </div>
+
                                 </div>
 
                                 <div class="row">
@@ -79,6 +91,20 @@
                                         @enderror">{{ old('address', Auth::user()->address) }}</textarea>
                                     </div>
                                     @error('address')
+                                        <div class="invalid-feedback d-inline-block mb-4">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+
+                                    <div class="form-group">
+                                        <label class="control-label mb-1">Gender</label>
+                                        <select name="gender" class="form-control  @error('gender') is-invalid
+                                        @enderror">
+                                            <option value="male" @if(Auth::user()->gender === "male") selected @endif>Male</option>
+                                            <option value="female" @if(Auth::user()->gender === "female") selected @endif>Female</option>
+                                        </select>
+                                    </div>
+                                    @error('gender')
                                         <div class="invalid-feedback d-inline-block mb-4">
                                             {{ $message }}
                                         </div>
