@@ -38,12 +38,26 @@
 
             <div class="form-group">
                 <label>Address</label>
-                <input class="au-input au-input--full form-control @error('address') is-invalid @enderror" type="text" name="address" placeholder="Address" value="{{ old('address') }}">
+                <textarea class="au-input au-input--full form-control @error('address') is-invalid @enderror" type="text" name="address" placeholder="Address" cols="30" rows="5">{{ old('address') }}</textarea>
             </div>
             @error('address')
             <div class="mb-4">
                 <small class="text-danger">{{ $message }}</small>
             </div>
+            @enderror
+
+            <div class="form-group">
+                <label>Gender</label>
+                <select name="gender" class="au-input au-input--full form-control @error('gender') is-invalid @enderror">
+                    <option value="" disabled selected>Select your Gender</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                </select>
+            </div>
+            @error('gender')
+                <div class="mb-4">
+                    <small class="text-danger">{{ $message }}</small>
+                </div>
             @enderror
 
             <div class="form-group">
