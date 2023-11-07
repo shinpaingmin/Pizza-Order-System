@@ -47,9 +47,14 @@ class AdminController extends Controller
         return redirect()->route('admin#changePasswordPage')->with(['notMatch' => 'The old password does not match.']);
     }
 
-    // direct details page
+    // direct profile details page
     public function details() {
         return view('admin.profile.details');
+    }
+
+    // direct profile edit page
+    public function edit() {
+        return view('admin.profile.edit');
     }
 
     // password validation function

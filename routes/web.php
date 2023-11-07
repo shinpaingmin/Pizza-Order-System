@@ -44,6 +44,7 @@ Route::middleware([
             Route::get('/changePassword/page', [AdminController::class, 'changePasswordPage'])->name('admin#changePasswordPage');
             Route::post('/change/password', [AdminController::class, 'changePassword'])->name('admin#changePassword');
             Route::get('/profile/details', [AdminController::class, 'details'])->name('admin#details');
+            Route::get('/profile/edit', [AdminController::class, 'edit'])->name('admin#edit');
         });
     });
 
