@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -68,7 +69,8 @@ class CategoryController extends Controller
     // prepare category data to insert into db
     private function requestCategoryData($request) {
         return [
-            'category_name' => $request->categoryName
+            'category_name' => $request->categoryName,
+            'updated_at' => Carbon::now()
         ];
     }
 
