@@ -120,7 +120,11 @@
                                     <div class="account-wrap">
                                         <div class="account-item clearfix js-item-menu">
                                             <div class="image">
-                                                <img src="{{ asset('admin/images/icon/avatar-01.jpg') }}" alt="John Doe" />
+                                                @if (empty(Auth::user()->image))
+                                                    <img src="{{ asset('image/user.png') }}" alt="Profile" class="img-thumbnail"/>
+                                                @else
+                                                    <img src="{{ Auth::user()->image }}" alt="Profile" />
+                                                @endif
                                             </div>
                                             <div class="content">
                                                 <a class="js-acc-btn text-decoration-none" href="#">{{ Auth::user()->username }}</a>
@@ -128,20 +132,24 @@
                                             <div class="account-dropdown js-dropdown">
                                                 <div class="info clearfix">
                                                     <div class="image">
-                                                        <a href="#">
-                                                            <img src="{{ asset('admin/images/icon/avatar-01.jpg') }}" alt="John Doe" />
+                                                        <a href="{{ route('admin#details') }}">
+                                                            @if (empty(Auth::user()->image))
+                                                                <img src="{{ asset('image/user.png') }}" alt="Profile" class="img-thumbnail"/>
+                                                            @else
+                                                                <img src="{{ Auth::user()->image }}" alt="Profile" />
+                                                            @endif
                                                         </a>
                                                     </div>
                                                     <div class="content">
                                                         <h5 class="name">
-                                                            <a href="#" class="text-decoration-none">{{ Auth::user()->username }}</a>
+                                                            <a href="{{ route('admin#details') }}" class="text-decoration-none">{{ Auth::user()->username }}</a>
                                                         </h5>
                                                         <span class="email">{{ Auth::user()->email }}</span>
                                                     </div>
                                                 </div>
                                                 <div class="account-dropdown__body">
                                                     <div class="account-dropdown__item">
-                                                        <a href="#" class="text-decoration-none">
+                                                        <a href="{{ route('admin#details') }}" class="text-decoration-none">
                                                             <i class="zmdi zmdi-account"></i>Account</a>
                                                     </div>
                                                 </div>
