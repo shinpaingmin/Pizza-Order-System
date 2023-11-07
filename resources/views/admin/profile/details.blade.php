@@ -1,6 +1,6 @@
 @extends('admin.layouts.master')
 
-@section('title', 'Change Password')
+@section('title', 'Profile Detail')
 
 @section('searchbar')
     {{-- <form class="form-header" action="{{ route('category#list') }}" method="GET">
@@ -56,7 +56,7 @@
                                         </div>
 
                                         <button class="btn btn-dark  mt-2" type="button">
-                                            <a href="{{ route('') }}" class="text-decoration-none text-white">
+                                            <a href="{{ route('admin#edit') }}" class="text-decoration-none text-white">
                                                 <i class="fa-solid fa-pen-to-square"></i> Edit profile
                                             </a>
                                         </button>
