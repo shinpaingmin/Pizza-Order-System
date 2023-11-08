@@ -43,7 +43,7 @@
 
 </head>
 
-<body class="animsition" style="background: #e5e5e5; animation-duration: 5ms;">
+<body class="animsition" style="background: #e5e5e5; animation-duration: 0 !important;">
     <div class="page-wrapper">
        <!-- MENU SIDEBAR-->
        <aside class="menu-sidebar d-none d-lg-block">
@@ -61,7 +61,7 @@
                             </a>
                         </li>
                         <li class="@yield('product') has-sub">
-                            <a class="js-arrow text-decoration-none" href="{{ route('category#list') }}">
+                            <a class="js-arrow text-decoration-none" href="{{ route('product#list') }}">
                                 <i class="fa-solid fa-box"></i> Product
                             </a>
                         </li>

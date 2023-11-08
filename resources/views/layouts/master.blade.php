@@ -38,7 +38,7 @@
 
 </head>
 
-<body class="animsition" style="background: #e5e5e5; animation-duration: 5ms;">
+<body class="animsition" style="background: #e5e5e5; animation-duration: 0 !important; ">
     <div class="page-wrapper" style="overflow:inherit !important; padding-bottom: 0 !important">
         <div class="page-content--bge5" style="height: auto !important">
             <div class="container" >

@@ -21,7 +21,7 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-3 offset-8">
-                        <a href="{{ route('category#list') }}"><button class="btn bg-dark text-white my-3">List</button></a>
+                        <a onclick="javascript:history.back()"><button class="btn bg-dark text-white my-3">List</button></a>
                     </div>
                 </div>
                 <div class="col-lg-6 offset-3">

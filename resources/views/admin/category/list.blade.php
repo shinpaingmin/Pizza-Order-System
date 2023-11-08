@@ -140,12 +140,15 @@
                                 @endif
                             </tbody>
                         </table>
-                        <div class="mt-4">
-                            {{-- {{ $categories->links() }} --}}
-                            {{ $categories->appends(request()->query())->links() }}
-                        </div>
+
                     </div>
                     <!-- END DATA TABLE -->
+                    <div class="mt-4">
+                        {{-- {{ $categories->links() }} --}}
+                        @if(isset($categories))
+                            {{ $categories->appends(request()->query())->links() }}
+                        @endif
+                    </div>
                 </div>
             </div>
         </div>
