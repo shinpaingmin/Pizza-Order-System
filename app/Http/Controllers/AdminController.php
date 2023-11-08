@@ -103,7 +103,7 @@ class AdminController extends Controller
         Validator::make($request->all(), [
             'name' => ['required'],
             'email' => ['required', 'unique:users,email,' . $id],
-            'phone' => ['required', 'min_digits:9', 'max_digits:15'],
+            'phone' => ['required', 'integer', 'min_digits:9', 'max_digits:15'],
             'address' => ['required'],
             'gender' => ['required'],
             'image' => [File::image()->max(1024)]
