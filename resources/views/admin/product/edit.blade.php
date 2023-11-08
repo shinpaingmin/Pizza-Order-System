@@ -118,28 +118,6 @@
                                         </div>
                                     @enderror
 
-                                    {{-- <div class="form-group">
-                                        <label class="control-label mb-1">Gender</label>
-                                        <select name="gender" class="form-control  @error('gender') is-invalid
-                                        @enderror">
-                                            <option value="male" @if(Auth::user()->gender === "male") selected @endif>Male</option>
-                                            <option value="female" @if(Auth::user()->gender === "female") selected @endif>Female</option>
-                                        </select>
-                                    </div>
-                                    @error('gender')
-                                        <div class="invalid-feedback d-inline-block mb-4">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
-
-                                    <div class="form-group">
-                                        <label class="control-label mb-1">Role</label>
-                                        <input id="cc-pament" name="role" type="text" class="form-control" disabled aria-required="true" aria-invalid="false"
-                                        value="{{ Auth::user()->role }}" >
-                                    </div>
-
-                                </div> --}}
-
                                 <div class="row col-6 offset-3">
                                     <button class="btn btn-dark text-white py-2" type="submit">
                                         <i class="fa-solid fa-arrows-rotate mr-2" ></i>  Update Info
