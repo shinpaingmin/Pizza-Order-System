@@ -1,4 +1,4 @@
-{{-- @extends('admin.layouts.master')
+@extends('admin.layouts.master')
 
 @section('title', 'Edit Product')
 
@@ -21,7 +21,7 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-3 offset-8">
-                        <a href="{{ route('product#list') }}"><button class="btn bg-dark text-white my-3">List</button></a>
+                        <a onclick="history.back()"><button class="btn bg-dark text-white my-3">List</button></a>
                     </div>
                 </div>
                 <div class="col-lg-10 offset-1">
@@ -32,14 +32,14 @@
                             </div>
                             <hr>
 
-                           @if (isset($product) && count($product) > 0)
+                           @if (isset($product) && !empty($product))
                             <form action="" method="post" enctype="multipart/form-data">
                                 @csrf
                                 <div class="row my-4">
                                     <div class="col-6 offset-4" style="">
                                         <div style="width: 250px; height: 250px" class="overflow-hidden">
                                             @if (!empty($product->image))
-                                                <img src="{{ asset('storage/' . $product->image) }}" alt="Profile" class="object-cover w-100 h-100" style="object-position: center !important">
+                                                <img src="{{ asset('storage/' . $product->image) }}" alt="Profile" class="object-cover w-100 h-100 img-thumbnail" style="object-position: center !important">
                                             @endif
                                         </div>
                                         <input type="file" name="image" class="mt-4 cursor-pointer">
@@ -66,45 +66,59 @@
                                     @enderror
 
                                     <div class="form-group">
-                                        <label class="control-label mb-1">Email</label>
-                                        <select name="categoryName" class="form-control @error('email') is-invalid
+                                        <label class="control-label mb-1">Category</label>
+                                        <select name="categoryName" class="form-control @error('categoryName') is-invalid
                                         @enderror">
                                             @if (isset($categories) && count($categories) > 0)
-                                                <option value="{{  }}"></option>
+                                                @foreach ($categories as $category)
+                                                    <option value="{{ $category->category_id }}" @if(empty(old('categoryName')) && $product->category_id === $category->category_id) selected
+                                                                                                 @elseif (!empty(old('categoryName')) && old('categoryName') === $category->category_id) selected
+                                                                                                 @endif>{{ $category->category_name }}</option>
+                                                @endforeach
                                             @endif
 
                                         </select>
-                                        <input id="cc-pament" name="email" type="email"  aria-required="true" aria-invalid="false"  value="{{ old('email', Auth::user()->email) }}">
                                     </div>
-                                    @error('email')
+                                    @error('categoryName')
                                         <div class="invalid-feedback d-inline-block mb-4">
                                             {{ $message }}
                                         </div>
                                     @enderror
 
                                     <div class="form-group">
-                                        <label class="control-label mb-1">Phone</label>
-                                        <input id="cc-pament" name="phone" type="number" class="form-control @error('phone') is-invalid
-                                        @enderror" aria-required="true" aria-invalid="false"  value="{{ old('phone', Auth::user()->phone) }}">
+                                        <label class="control-label mb-1">Price</label>
+                                        <input id="cc-pament" name="price" type="number" class="form-control @error('price') is-invalid
+                                        @enderror" aria-required="true" aria-invalid="false"  value="{{ old('price', $product->price) }}">
                                     </div>
-                                    @error('phone')
+                                    @error('price')
                                         <div class="invalid-feedback d-inline-block mb-4">
                                             {{ $message }}
                                         </div>
                                     @enderror
 
                                     <div class="form-group">
-                                        <label class="control-label mb-1">Address</label>
-                                        <textarea name="address" cols="30" rows="10" class="form-control @error('address') is-invalid
-                                        @enderror">{{ old('address', Auth::user()->address) }}</textarea>
+                                        <label class="control-label mb-1">Waiting Time</label>
+                                        <input id="cc-pament" name="waitingTime" type="number" class="form-control @error('waitingTime') is-invalid
+                                        @enderror" aria-required="true" aria-invalid="false"  value="{{ old('waitingTime', $product->waiting_time) }}">
                                     </div>
-                                    @error('address')
+                                    @error('waitingTime')
                                         <div class="invalid-feedback d-inline-block mb-4">
                                             {{ $message }}
                                         </div>
                                     @enderror
 
                                     <div class="form-group">
+                                        <label class="control-label mb-1">Description</label>
+                                        <textarea name="description" cols="30" rows="10" class="form-control @error('description') is-invalid
+                                        @enderror">{{ old('description', $product->description) }}</textarea>
+                                    </div>
+                                    @error('description')
+                                        <div class="invalid-feedback d-inline-block mb-4">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+
+                                    {{-- <div class="form-group">
                                         <label class="control-label mb-1">Gender</label>
                                         <select name="gender" class="form-control  @error('gender') is-invalid
                                         @enderror">
@@ -124,7 +138,7 @@
                                         value="{{ Auth::user()->role }}" >
                                     </div>
 
-                                </div>
+                                </div> --}}
 
                                 <div class="row col-6 offset-3">
                                     <button class="btn btn-dark text-white py-2" type="submit">
@@ -140,4 +154,4 @@
         </div>
     </div>
     <!-- END MAIN CONTENT-->
-@endsection --}}
+@endsection
