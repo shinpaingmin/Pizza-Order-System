@@ -2,6 +2,8 @@
 
 @section('title', 'Category List')
 
+@section('category', 'active')
+
 @section('searchbar')
     <form class="form-header" action="{{ route('category#list') }}" method="GET">
         @csrf

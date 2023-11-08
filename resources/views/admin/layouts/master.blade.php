@@ -55,12 +55,16 @@
             <div class="menu-sidebar__content js-scrollbar1">
                 <nav class="navbar-sidebar">
                     <ul class="list-unstyled navbar__list">
-                        <li class="active has-sub">
+                        <li class="@yield('category') has-sub">
                             <a class="js-arrow text-decoration-none" href="{{ route('category#list') }}">
                                 <i class="fa-solid fa-list-ul"></i> Category
                             </a>
                         </li>
-
+                        <li class="@yield('product') has-sub">
+                            <a class="js-arrow text-decoration-none" href="{{ route('category#list') }}">
+                                <i class="fa-solid fa-box"></i> Product
+                            </a>
+                        </li>
                     </ul>
                 </nav>
             </div>
