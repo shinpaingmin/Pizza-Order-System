@@ -16,6 +16,8 @@ class Product extends Model
         'description',
         'image',
         'price',
-        'view_count'
+        'waiting_time',
+        'view_count',
+        'updated_at'
     ];
 }
