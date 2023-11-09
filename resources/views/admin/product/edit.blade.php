@@ -20,8 +20,8 @@
         <div class="section__content section__content--p30">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-3 offset-8">
-                        <a onclick="history.back()"><button class="btn bg-dark text-white my-3">List</button></a>
+                    <div class="col-2 offset-10">
+                        <a href="{{ route('product#list') }}"><button class="btn bg-dark text-white my-3">List</button></a>
                     </div>
                 </div>
                 <div class="col-lg-10 offset-1">
@@ -33,7 +33,7 @@
                             <hr>
 
                            @if (isset($product) && !empty($product))
-                            <form action="" method="post" enctype="multipart/form-data">
+                            <form action="{{ route('product#update', $product->product_id) }}" method="post" enctype="multipart/form-data">
                                 @csrf
                                 <div class="row my-4">
                                     <div class="col-6 offset-4" style="">
