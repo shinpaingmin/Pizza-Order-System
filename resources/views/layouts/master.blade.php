@@ -32,6 +32,7 @@
     <link href="{{ asset('admin/vendor/slick/slick.css') }}" rel="stylesheet" media="all">
     <link href="{{ asset('admin/vendor/select2/select2.min.css') }}" rel="stylesheet" media="all">
     <link href="{{ asset('admin/vendor/perfect-scrollbar/perfect-scrollbar.css') }}" rel="stylesheet" media="all">
+    <link rel="icon" href="{{ asset("image/4306482_cheese_fast_fastfood_food_italian_icon.svg") }}">
 
     <!-- Main CSS-->
     <link href="{{ asset('admin/css/theme.css') }}" rel="stylesheet" media="all">

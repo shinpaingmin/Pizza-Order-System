@@ -96,6 +96,7 @@
                                     <th style="background: #e5e5e5">ID</th>
                                     <th style="background: #e5e5e5">Category Name</th>
                                     <th style="background: #e5e5e5">Created Date</th>
+                                    <th style="background: #e5e5e5">Updated Date</th>
                                     @if (isset($categories) && count($categories) > 0)
                                         <th class="row offset-4" style="background: #e5e5e5">Actions</th>
                                     @endif
@@ -110,6 +111,7 @@
                                             <span >{{ $category->category_name }}</span>
                                         </td>
                                         <td >{{ $category->created_at->format('F j, Y') }}</td>
+                                        <td>{{ $category->updated_at->format('F j, Y') }}</td>
                                         <td>
                                             <div class="table-data-feature justify-content-center">
                                                 <button class="item mr-4" data-toggle="tooltip" data-placement="top" title="Send">
@@ -133,6 +135,7 @@
                                     @endforeach
                                 @else
                                     <tr class="tr-shadow">
+                                        <td>N/A</td>
                                         <td>N/A</td>
                                         <td>N/A</td>
                                         <td>N/A</td>
