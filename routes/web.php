@@ -59,6 +59,7 @@ Route::middleware([
             Route::post('/create', [ProductController::class, 'create'])->name('product#create');
             Route::get('/delete/{id}/{image}', [ProductController::class, 'delete'])->name('product#delete');
             Route::get('edit/page/{id}', [ProductController::class, 'editPage'])->name('product#editPage');
+            Route::post('update/{id}', [ProductController::class, 'update'])->name('product#update');
         });
     });
 
