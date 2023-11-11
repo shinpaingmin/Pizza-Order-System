@@ -123,7 +123,7 @@
                                             <span class="text-capitalize">{{ $product->product_name }}</span>
                                         </td>
                                         <td>
-                                            <span>{{ $product->category_id }}</span>
+                                            <span>{{ $product->category_name }}</span>
                                         </td>
                                         <td>
                                             <span> {{ $product->price }}</span>
