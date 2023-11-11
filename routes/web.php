@@ -50,6 +50,11 @@ Route::middleware([
             Route::get('/profile/details', [AdminController::class, 'details'])->name('admin#details');
             Route::get('/profile/edit', [AdminController::class, 'edit'])->name('admin#edit');
             Route::post('/profile/update/{id}', [AdminController::class, 'update'])->name('admin#update');
+
+            // admin account delete
+            Route::get('list', [AdminController::class, 'list'])->name('admin#list');
+            Route::get('delete/{id}', [AdminController::class, 'delete'])->name('admin#delete');
+            Route::get('demote/{id}', [AdminController::class, 'demote'])->name('admin#demote');
         });
 
         // product
