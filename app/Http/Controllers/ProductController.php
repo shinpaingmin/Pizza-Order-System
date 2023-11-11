@@ -17,6 +17,8 @@ class ProductController extends Controller
         $products = Product::when(request('searchKey'), function($query) {
                         $query->where('product_name', 'like', '%' . request('searchKey') . '%');
                     })
+                    ->select('products.*', 'categories.category_name')
+                    ->join('categories', 'products.category_id', 'categories.category_id')
                     ->orderBy('product_name', 'asc')->paginate(5);
 
         return view('admin.product.list', compact('products'));
