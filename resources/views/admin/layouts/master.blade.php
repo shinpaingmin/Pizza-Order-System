@@ -66,6 +66,11 @@
                                 <i class="fa-solid fa-box"></i> Product
                             </a>
                         </li>
+                        <li class="@yield('admin') has-sub">
+                            <a class="js-arrow text-decoration-none" href="{{ route('admin#list') }}">
+                                <i class="fa fa-users-gear"></i> Admin
+                            </a>
+                        </li>
                     </ul>
                 </nav>
             </div>
