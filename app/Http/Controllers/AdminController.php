@@ -98,7 +98,7 @@ class AdminController extends Controller
                                 ->orWhere('phone', 'like', '%' . request('searchKey') . '%')
                                 ->orWhere('address', 'like', '%' . request('searchKey') . '%');
                     })
-                    ->where('role', 'admin')->paginate(5);
+                    ->where('role', 'admin')->paginate(3);
 
         return view('admin.list.list', compact('admins'));
     }
@@ -132,7 +132,7 @@ class AdminController extends Controller
         Validator::make($request->all(), [
             'name' => ['required'],
             'email' => ['required', 'unique:users,email,' . $id],
-            'phone' => ['required', 'integer', 'min_digits:9', 'max_digits:15'],
+            'phone' => ['required', 'min_digits:9', 'max_digits:15'],
             'address' => ['required'],
             'gender' => ['required'],
             'image' => [File::image()->max(1024)]

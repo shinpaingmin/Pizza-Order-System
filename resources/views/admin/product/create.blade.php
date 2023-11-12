@@ -51,7 +51,7 @@
                                         <option value="" @if (!old('categoryName')) selected @endif disabled>Choose product category</option>
                                     @if (isset($categories) && count($categories) > 0)
                                         @foreach ($categories as $category)
-                                            <option value="{{ $category->category_id }}" @if (!empty(old('categoryName')) && old('categoryName') === $category->category_name) selected @endif>{{ $category->category_name }}</option>
+                                            <option value="{{ $category->id }}" @if (!empty(old('categoryName')) && old('categoryName') === $category->category_name) selected @endif>{{ $category->category_name }}</option>
                                         @endforeach
                                     @endif
 

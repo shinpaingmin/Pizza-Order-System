@@ -58,17 +58,17 @@
                     <ul class="list-unstyled navbar__list">
                         <li class="@yield('category') has-sub">
                             <a class="js-arrow text-decoration-none" href="{{ route('category#list') }}">
-                                <i class="fa-solid fa-list-ul"></i> Category
+                                <i class="fa-solid fa-list-ul col-2"></i> Category
                             </a>
                         </li>
                         <li class="@yield('product') has-sub">
                             <a class="js-arrow text-decoration-none" href="{{ route('product#list') }}">
-                                <i class="fa-solid fa-box"></i> Product
+                                <i class="fa-solid fa-box col-2"></i> Product
                             </a>
                         </li>
                         <li class="@yield('admin') has-sub">
                             <a class="js-arrow text-decoration-none" href="{{ route('admin#list') }}">
-                                <i class="fa fa-users-gear"></i> Admin
+                                <i class="fa fa-users-gear col-2"></i> Admin
                             </a>
                         </li>
                     </ul>

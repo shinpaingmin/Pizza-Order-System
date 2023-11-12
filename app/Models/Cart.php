@@ -11,8 +11,6 @@ class Cart extends Model
 
     protected $fillable = [
         'cart_id',
-        'user_id',
-        'product_id',
-        'qty'
+        'user_id'
     ];
 }

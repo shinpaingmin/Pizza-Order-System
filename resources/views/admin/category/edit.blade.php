@@ -31,7 +31,7 @@
                                 <h3 class="text-center title-2">Modify Category</h3>
                             </div>
                             <hr>
-                            <form action="{{ route('category#update', $category->category_id) }}" method="post" novalidate="novalidate">
+                            <form action="{{ route('category#update', $category->id) }}" method="post" novalidate="novalidate">
                                 @csrf
                                 <div class="form-group">
                                     <label class="control-label mb-1">Name</label>

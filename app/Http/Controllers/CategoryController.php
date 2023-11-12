@@ -38,14 +38,14 @@ class CategoryController extends Controller
     // delete category function
     public function delete($id) {
         if($id) {
-            Category::where('category_id', $id)->delete();
+            Category::where('id', $id)->delete();
         }
 
         return redirect()->route('category#list')->with(['deleteSuccess' => 'Deleted Successfully!']);
     }
     // direct edit page
     public function editPage($id) {
-        $category = Category::where('category_id', $id)->first();
+        $category = Category::where('id', $id)->first();
         return view('admin.category.edit', compact('category'));
     }
 
@@ -55,14 +55,14 @@ class CategoryController extends Controller
         $this->categoryValidation($request, $id);
         $data = $this->requestCategoryData($request);
 
-        Category::where('category_id', $id)->update($data);
+        Category::where('id', $id)->update($data);
         return redirect()->route('category#list')->with(['updateSuccess' => 'Updated Successfully!']);
     }
 
     // category validation
     private function categoryValidation($request, $id = "") {
         Validator::make($request->all(), [
-            'categoryName' => 'required|min:4|unique:categories,category_name,' . $id . ',category_id'
+            'categoryName' => 'required|min:4|unique:categories,category_name,' . $id
         ])->validate();
     }
 

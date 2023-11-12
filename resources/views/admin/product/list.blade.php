@@ -113,7 +113,7 @@
                                 @if (isset($products) && count($products) > 0)
                                     @foreach ($products as $product)
                                     <tr class="tr-shadow">
-                                        <td>{{ $product->product_id }}</td>
+                                        <td>{{ $product->id }}</td>
                                         <td>
                                             <div class="" style="width: 150px; height: 125px">
                                                 <img src="{{ asset('storage/' . $product->image) }}" alt="pizza" class="img-thumbnail shadow-sm object-cover w-100 h-100 " style="object-position: center">
@@ -149,11 +149,11 @@
                                                     <i class="zmdi zmdi-mail-send"></i>
                                                 </button>
                                                 <a class="item mr-4" data-toggle="tooltip" data-placement="top" title="Edit"
-                                                href="{{ route('product#editPage', $product->product_id) }}">
+                                                href="{{ route('product#editPage', $product->id) }}">
                                                     <i class="zmdi zmdi-edit"></i>
                                                 </a>
                                                 <a class="item mr-4 cursor-pointer" data-toggle="tooltip" data-placement="top" title="Delete"
-                                                href="{{ route('product#delete', [$product->product_id, $product->image]) }}">
+                                                href="{{ route('product#delete', [$product->id, $product->image]) }}">
                                                     <i class="zmdi zmdi-delete"></i>
                                                 </a>
                                                 <button class="item mr-4" data-toggle="tooltip" data-placement="top" title="More">

@@ -18,7 +18,7 @@ class ProductController extends Controller
                         $query->where('product_name', 'like', '%' . request('searchKey') . '%');
                     })
                     ->select('products.*', 'categories.category_name')
-                    ->join('categories', 'products.category_id', 'categories.category_id')
+                    ->join('categories', 'products.category_id', 'categories.id')
                     ->orderBy('product_name', 'asc')->paginate(5);
 
         return view('admin.product.list', compact('products'));
@@ -26,7 +26,7 @@ class ProductController extends Controller
 
     // direct product create page
     public function createPage() {
-        $categories = Category::select('category_id', 'category_name')->get();
+        $categories = Category::select('id', 'category_name')->get();
 
         return view('admin.product.create', compact('categories'));
     }
@@ -52,16 +52,16 @@ class ProductController extends Controller
     public function delete($id, $image) {
         Storage::delete('public/' . $image);
 
-        Product::where('product_id', $id)->delete();
+        Product::where('id', $id)->delete();
 
         return redirect()->route('product#list')->with(['deleteSuccess' => 'Deleted Successfully!']);
     }
 
     // direct edit page
     public function editPage($id) {
-        $product = Product::where('product_id', $id)->first();
+        $product = Product::where('id', $id)->first();
 
-        $categories = Category::select('category_id', 'category_name')->get();
+        $categories = Category::select('id', 'category_name')->get();
 
         return view('admin.product.edit', compact(['product', 'categories']));
     }
@@ -75,7 +75,7 @@ class ProductController extends Controller
         $data['updated_at'] = Carbon::now();
 
         if($request->hasFile('image')) {
-            $dbImage = Product::where('product_id', $id)->first();
+            $dbImage = Product::where('id', $id)->first();
 
             $dbImage = $dbImage->image;
 
@@ -88,7 +88,7 @@ class ProductController extends Controller
             $data['image'] = $fileName;
         }
 
-        Product::where('product_id', $id)->update($data);
+        Product::where('id', $id)->update($data);
 
         return redirect()->route('product#list')->with(['updateSuccess' => 'Updated Successfully!']);
     }
@@ -97,7 +97,7 @@ class ProductController extends Controller
     // product validation function
     private function productValidation($request, $id="") {
         $validationRules = [
-            'productName' => ['required', 'string', 'min:4', 'max:255', 'unique:products,product_name,' . $id . ',product_id'],
+            'productName' => ['required', 'string', 'min:4', 'max:255', 'unique:products,product_name,' . $id],
             'categoryName' => ['required'],
             'description' => ['required', 'string', 'min:10'],
             'image' => ['required', File::image()->max(2048)],

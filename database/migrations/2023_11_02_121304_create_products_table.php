@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('products', function (Blueprint $table) {
-            $table->id('product_id');
-            $table->integer('category_id');
+            $table->id();
+            $table->unsignedBigInteger('category_id');
             $table->string('product_name');
             $table->longText('description');
             $table->string('image')->nullable();
@@ -21,6 +21,7 @@ return new class extends Migration
             $table->integer('waiting_time');
             $table->integer('view_count')->default(0);
             $table->timestamps();
+            $table->foreign('category_id')->references('id')->on('categories');
         });
     }
 

@@ -11,14 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('ratings', function (Blueprint $table) {
+        Schema::create('order__items', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('order_id');
             $table->unsignedBigInteger('product_id');
-            $table->integer('rating_count');
-            $table->longText('message')->nullable();
+            $table->integer('total_price');
+            $table->integer('total_qty');
+            $table->integer('status')->default(0);   // 0 = pending , 1 = success , 2 = reject
             $table->timestamps();
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('order_id')->references('id')->on('orders');
             $table->foreign('product_id')->references('id')->on('products');
         });
     }
@@ -28,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('ratings');
+        Schema::dropIfExists('order__items');
     }
 };

@@ -49,9 +49,9 @@
             <div class="form-group">
                 <label>Gender</label>
                 <select name="gender" class="au-input au-input--full form-control @error('gender') is-invalid @enderror">
-                    <option value="" disabled selected>Select your Gender</option>
-                    <option value="male">Male</option>
-                    <option value="female">Female</option>
+                    <option value="" disabled @if(empty(old('gender'))) selected @endif>Select your Gender</option>
+                    <option value="male" @if(!empty(old('gender')) && old('gender') === 'male') selected  @endif>Male</option>
+                    <option value="female" @if(!empty(old('gender')) && old('gender') === 'female') selected  @endif>Female</option>
                 </select>
             </div>
             @error('gender')

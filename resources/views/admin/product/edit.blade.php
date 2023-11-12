@@ -33,7 +33,7 @@
                             <hr>
 
                            @if (isset($product) && !empty($product))
-                            <form action="{{ route('product#update', $product->product_id) }}" method="post" enctype="multipart/form-data">
+                            <form action="{{ route('product#update', $product->id) }}" method="post" enctype="multipart/form-data">
                                 @csrf
                                 <div class="row my-4">
                                     <div class="col-6 offset-4" style="">
@@ -71,8 +71,8 @@
                                         @enderror">
                                             @if (isset($categories) && count($categories) > 0)
                                                 @foreach ($categories as $category)
-                                                    <option value="{{ $category->category_id }}" @if(empty(old('categoryName')) && $product->category_id === $category->category_id) selected
-                                                                                                 @elseif (!empty(old('categoryName')) && old('categoryName') === $category->category_id) selected
+                                                    <option value="{{ $category->id }}" @if(empty(old('categoryName')) && $product->category_id === $category->id) selected
+                                                                                                 @elseif (!empty(old('categoryName')) && old('categoryName') === $category->id) selected
                                                                                                  @endif>{{ $category->category_name }}</option>
                                                 @endforeach
                                             @endif

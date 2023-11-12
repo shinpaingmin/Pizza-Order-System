@@ -106,7 +106,7 @@
                                 @if (isset($categories) && count($categories) > 0)
                                     @foreach ($categories as $category)
                                     <tr class="tr-shadow">
-                                        <td>{{ $category->category_id }}</td>
+                                        <td>{{ $category->id }}</td>
                                         <td>
                                             <span >{{ $category->category_name }}</span>
                                         </td>
@@ -118,11 +118,11 @@
                                                     <i class="zmdi zmdi-mail-send"></i>
                                                 </button>
                                                 <a class="item mr-4" data-toggle="tooltip" data-placement="top" title="Edit"
-                                                href="{{ route('category#editPage', $category->category_id) }}">
+                                                href="{{ route('category#editPage', $category->id) }}">
                                                     <i class="zmdi zmdi-edit"></i>
                                                 </a>
                                                 <a class="item mr-4 cursor-pointer" data-toggle="tooltip" data-placement="top" title="Delete"
-                                                href="{{ route('category#delete', $category->category_id) }}">
+                                                href="{{ route('category#delete', $category->id) }}">
                                                     <i class="zmdi zmdi-delete"></i>
                                                 </a>
                                                 <button class="item mr-4" data-toggle="tooltip" data-placement="top" title="More">
