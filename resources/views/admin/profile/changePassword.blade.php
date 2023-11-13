@@ -3,14 +3,13 @@
 @section('title', 'Change Password')
 
 @section('searchbar')
-    {{-- <form class="form-header" action="{{ route('category#list') }}" method="GET">
+    <form class="form-header" action="{{ route('admin#list') }}" method="GET">
         @csrf
-        <input class="au-input au-input--xl" type="text" name="searchKey" placeholder="Search for category..." value="{{ request('searchKey') }}"/>
+        <input class="au-input au-input--xl" type="text" name="searchKey" placeholder="Search for other admins..." value="{{ request('searchKey') }}"/>
         <button class="au-btn--submit" type="submit">
             <i class="zmdi zmdi-search"></i>
         </button>
-    </form> --}}
-    <h2>Admin Dashboard</h2>
+    </form>
 @endsection
 
 @section('content')

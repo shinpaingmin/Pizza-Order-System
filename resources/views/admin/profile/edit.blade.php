@@ -3,14 +3,13 @@
 @section('title', 'Edit Profile')
 
 @section('searchbar')
-    {{-- <form class="form-header" action="{{ route('category#list') }}" method="GET">
+    <form class="form-header" action="{{ route('admin#list') }}" method="GET">
         @csrf
-        <input class="au-input au-input--xl" type="text" name="searchKey" placeholder="Search for category..." value="{{ request('searchKey') }}"/>
+        <input class="au-input au-input--xl" type="text" name="searchKey" placeholder="Search for other admins..." value="{{ request('searchKey') }}"/>
         <button class="au-btn--submit" type="submit">
             <i class="zmdi zmdi-search"></i>
         </button>
-    </form> --}}
-    <h2>Admin Dashboard</h2>
+    </form>
 @endsection
 
 @section('content')
@@ -100,8 +99,8 @@
                                         <label class="control-label mb-1">Gender</label>
                                         <select name="gender" class="form-control  @error('gender') is-invalid
                                         @enderror">
-                                            <option value="male" @if(Auth::user()->gender === "male") selected @endif>Male</option>
-                                            <option value="female" @if(Auth::user()->gender === "female") selected @endif>Female</option>
+                                            <option value="male" @if(old('gender', Auth::user()->gender) === "male") selected @endif>Male</option>
+                                            <option value="female" @if(old('gender', Auth::user()->gender) === "female") selected @endif>Female</option>
                                         </select>
                                     </div>
                                     @error('gender')

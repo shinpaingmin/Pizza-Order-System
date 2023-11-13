@@ -89,6 +89,7 @@
                         </div>
                     @endif
 
+                    @if(isset($categories) && count($categories) > 0)
                     <div class="table-responsive table-responsive-data2">
                         <table class="table table-data2">
                             <thead>
@@ -97,13 +98,11 @@
                                     <th style="background: #e5e5e5">Category Name</th>
                                     <th style="background: #e5e5e5">Created Date</th>
                                     <th style="background: #e5e5e5">Updated Date</th>
-                                    @if (isset($categories) && count($categories) > 0)
-                                        <th class="row offset-4" style="background: #e5e5e5">Actions</th>
-                                    @endif
+                                    <th class="row offset-4" style="background: #e5e5e5">Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @if (isset($categories) && count($categories) > 0)
+
                                     @foreach ($categories as $category)
                                     <tr class="tr-shadow">
                                         <td>{{ $category->id }}</td>
@@ -133,16 +132,15 @@
                                     </tr>
                                     <tr class="spacer"></tr>
                                     @endforeach
-                                @else
-                                    <tr class="tr-shadow">
-                                        <td>N/A</td>
-                                        <td>N/A</td>
-                                        <td>N/A</td>
-                                        <td>N/A</td>
-                                    </tr>
-                                @endif
+
                             </tbody>
                         </table>
+
+                        @else
+                            <div class="d-flex justify-content-center align-items-center">
+                                <img src="{{ asset('image/no-products.png') }}" alt="no categories available">
+                            </div>
+                        @endif
 
                     </div>
                     <!-- END DATA TABLE -->

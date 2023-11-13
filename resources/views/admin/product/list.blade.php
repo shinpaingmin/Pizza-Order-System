@@ -89,6 +89,7 @@
                         </div>
                     @endif
 
+                    @if(isset($products) && count($products) > 0)
                     <div class="table-responsive table-responsive-data2" style="overflow-x: auto">
                         <table class="table table-data2">
                             <thead>
@@ -103,14 +104,11 @@
                                     <th style="background: #e5e5e5">Description</th>
                                     <th style="background: #e5e5e5">Created Date</th>
                                     <th style="background: #e5e5e5">Updated Date</th>
-
-                                    @if (isset($products) && count($products) > 0)
-                                        <th class="row offset-3" style="background: #e5e5e5">Actions</th>
-                                    @endif
+                                    <th class="row offset-3" style="background: #e5e5e5">Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @if (isset($products) && count($products) > 0)
+
                                     @foreach ($products as $product)
                                     <tr class="tr-shadow">
                                         <td>{{ $product->id }}</td>
@@ -164,25 +162,19 @@
                                     </tr>
                                     <tr class="spacer"></tr>
                                     @endforeach
-                                @else
-                                    <tr class="tr-shadow">
-                                        <td>N/A</td>
-                                        <td>N/A</td>
-                                        <td>N/A</td>
-                                        <td>N/A</td>
-                                        <td>N/A</td>
-                                        <td>N/A</td>
-                                        <td>N/A</td>
-                                        <td>N/A</td>
-                                        <td>N/A</td>
-                                        <td>N/A</td>
-                                    </tr>
-                                @endif
+
                             </tbody>
                         </table>
 
                     </div>
                     <!-- END DATA TABLE -->
+
+                    @else
+                        <div class="d-flex justify-content-center align-items-center">
+                            <img src="{{ asset('image/no-products.png') }}" alt="no products available">
+                        </div>
+                    @endif
+
 
                     <div class="mt-4">
                         {{-- {{ $categories->links() }} --}}

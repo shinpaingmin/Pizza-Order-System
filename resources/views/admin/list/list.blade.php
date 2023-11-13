@@ -30,7 +30,7 @@
                             </div>
                         </div>
                         <div class="table-data__tool-right">
-                            <a href="{{ route('category#createPage') }}">
+                            <a href="{{ route('admin#createPage') }}">
                                 <button class="au-btn au-btn-icon au-btn--green au-btn--small">
                                     <i class="zmdi zmdi-plus"></i>add admin
                                 </button>
@@ -89,6 +89,7 @@
                         </div>
                     @endif
 
+                    @if (isset($admins) && count($admins) > 0)
                     <div class="table-responsive table-responsive-data2" style="overflow-x: auto">
                         <table class="table table-data2">
                             <thead>
@@ -103,13 +104,11 @@
                                     <th style="background: #e5e5e5">Role</th>
                                     <th style="background: #e5e5e5">Created Date</th>
                                     <th style="background: #e5e5e5">Updated Date</th>
-                                    @if (isset($categories) && count($categories) > 0)
-                                        <th class="row offset-4" style="background: #e5e5e5">Actions</th>
-                                    @endif
+                                    <th class="row offset-4" style="background: #e5e5e5">Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @if (isset($admins) && count($admins) > 0)
+
                                     @foreach ($admins as $admin)
                                     <tr class="tr-shadow">
                                         <td>{{ $admin->id }}</td>
@@ -172,21 +171,16 @@
                                     </tr>
                                     <tr class="spacer"></tr>
                                     @endforeach
-                                @else
-                                    <tr class="tr-shadow">
-                                        <td>N/A</td>
-                                        <td>N/A</td>
-                                        <td>N/A</td>
-                                        <td>N/A</td>
-                                        <td>N/A</td>
-                                        <td>N/A</td>
-                                        <td>N/A</td>
-                                        <td>N/A</td>
-                                        <td>N/A</td>
-                                    </tr>
-                                @endif
+
                             </tbody>
                         </table>
+
+                        @else
+                            <div class="d-flex flex-column justify-content-center align-items-center mt-5">
+                                <img src="{{ asset('image/no-users-found.png') }}" alt="no users available">
+                                <h3>No user found!</h3>
+                            </div>
+                        @endif
 
                     </div>
                     <!-- END DATA TABLE -->
