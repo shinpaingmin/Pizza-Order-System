@@ -118,6 +118,34 @@ class AdminController extends Controller
         return redirect()->route('admin#list')->with(['deleteSuccess' => 'Demoted Successfully!']);
     }
 
+    // direct admin create page
+    public function createPage() {
+        return view('admin.list.create');
+    }
+
+    // create admin function
+    public function create(Request $request) {
+        $this->accountValidation($request);
+
+        $data = $this->getUserData($request);
+
+        $data['role'] = 'admin';
+        $data['password'] = Hash::make($request->password);
+
+        // check whether the request contains image
+        if($request->hasFile('image')) {
+            $fileName = uniqid() . $request->file('image')->getClientOriginalName();
+
+            $request->file('image')->storeAs('public', $fileName);
+
+            $data['image'] = $fileName;
+        }
+
+        User::create($data);
+
+        return redirect()->route('admin#list')->with(['createSuccess' => 'Added Successfully!']);
+    }
+
     // password validation function
     private function passwordValidation($request) {
         Validator::make($request->all(), [
@@ -128,15 +156,22 @@ class AdminController extends Controller
     }
 
     // account validation
-    private function accountValidation($request, $id) {
-        Validator::make($request->all(), [
+    private function accountValidation($request, $id="") {
+        $validationRules =  [
             'name' => ['required'],
             'email' => ['required', 'unique:users,email,' . $id],
             'phone' => ['required', 'min_digits:9', 'max_digits:15'],
             'address' => ['required'],
             'gender' => ['required'],
             'image' => [File::image()->max(1024)]
-        ])->validate();
+        ];
+
+        if(empty($id)) {
+            $validationRules['password'] = ['required', 'string', Password::min(8)->mixedCase()->numbers()->symbols() , 'confirmed'];
+            $validationRules['password_confirmation'] = ['required'];
+        }
+
+        Validator::make($request->all(), $validationRules)->validate();
     }
 
     // request user data

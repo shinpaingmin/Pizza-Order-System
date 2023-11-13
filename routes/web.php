@@ -55,6 +55,8 @@ Route::middleware([
             Route::get('list', [AdminController::class, 'list'])->name('admin#list');
             Route::get('delete/{id}', [AdminController::class, 'delete'])->name('admin#delete');
             Route::get('demote/{id}', [AdminController::class, 'demote'])->name('admin#demote');
+            Route::get('create/page', [AdminController::class, 'createPage'])->name('admin#createPage');
+            Route::post('create', [AdminController::class, 'create'])->name('admin#create');
         });
 
         // product
