@@ -18,11 +18,11 @@ class AdminAuthMiddleware
     {
         if(!empty(Auth::user())) {
             if(url()->current() == route('auth#loginPage') || url()->current() == route('auth#registerPage')) {
-                return back();
+                return redirect()->route('user#home');
             }
 
             if(Auth::user()->role === "user") {
-                return back();
+                return redirect()->route('user#home');
             }
 
             return $next($request);

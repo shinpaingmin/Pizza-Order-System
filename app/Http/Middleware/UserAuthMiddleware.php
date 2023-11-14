@@ -17,7 +17,7 @@ class UserAuthMiddleware
     public function handle(Request $request, Closure $next): Response
     {
         if(Auth::user()->role === "admin") {
-            return back();
+            return redirect()->route('category#list');
         }
         return $next($request);
     }
