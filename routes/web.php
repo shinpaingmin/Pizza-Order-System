@@ -90,6 +90,16 @@ Route::middleware([
         // home
         Route::prefix('user')->group(function() {
             Route::get('/home', [UserController::class, 'home'])->name('user#home');
+
+            Route::prefix('password')->group(function() {
+                Route::get('/change', [UserController::class, 'changePasswordPage'])->name('user#changePasswordPage');
+                Route::post('/change', [UserController::class, 'changePassword'])->name('user#changePassword');
+            });
+
+            Route::prefix('profile')->group(function() {
+                Route::get('/edit', [UserController::class, 'editProfile'])->name('user#editProfilePage');
+                Route::post('/update/{id}', [UserController::class, 'updateProfile'])->name('user#updateProfile');
+            });
         });
     });
 });
