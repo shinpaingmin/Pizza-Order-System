@@ -25,6 +25,10 @@
     <!-- Customized Bootstrap Stylesheet -->
     <link href="{{ asset('user/css/style.css') }}" rel="stylesheet">
 
+    {{-- Font-Awesome  --}}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
 
     <!-- Vendor CSS-->
     <link href="{{ asset('admin/vendor/animsition/animsition.min.css') }}" rel="stylesheet" media="all">
@@ -71,7 +75,7 @@
                     </button>
                     <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                         <div class="navbar-nav mr-auto py-0">
-                            <a href="shop.html" class="nav-item nav-link active">Home</a>
+                            <a href="{{ route('user#home') }}" class="nav-item nav-link active">Home</a>
                             <a href="cart.html" class="nav-item nav-link">My Cart</a>
                             <a href="contact.html" class="nav-item nav-link">Contact</a>
                         </div>
@@ -86,7 +90,7 @@
                             </a>
 
                         </div>
-                        <div class="account-wrap ml-5">
+                        <div class="account-wrap ml-5 mt-1">
                             <div class="account-item clearfix js-item-menu">
                                 <div class="image" style="width: 40px; height: 40px">
                                     @if (empty(Auth::user()->image) && Auth::user()->gender === 'male')
@@ -94,7 +98,7 @@
                                     @elseif (empty(Auth::user()->image) && Auth::user()->gender === 'female')
                                         <img src="{{ asset('image/female.png') }}" alt="Profile" class="img-thumbnail bg-white w-100"/>
                                     @else
-                                        <img src="{{ asset('storage/' . Auth::user()->image) }}" alt="Profile" class="img-thumbnail bg-white w-100"/>
+                                        <img src="{{ asset('storage/' . Auth::user()->image) }}" alt="Profile" class=" rounded-circle bg-white w-100"/>
                                     @endif
                                 </div>
                                 <div class="content">
@@ -103,32 +107,32 @@
                                 <div class="account-dropdown js-dropdown">
                                     <div class="info clearfix">
                                         <div class="image">
-                                            <a href="{{ route('admin#details') }}">
+                                            <a href="{{ route('user#editProfilePage') }}">
                                                 @if (empty(Auth::user()->image) && Auth::user()->gender === 'male')
                                                     <img src="{{ asset('image/male.png') }}" alt="Profile" class="img-thumbnail"/>
                                                 @elseif (empty(Auth::user()->image) && Auth::user()->gender === 'female')
                                                     <img src="{{ asset('image/female.png') }}" alt="Profile" class="img-thumbnail"/>
                                                 @else
-                                                    <img src="{{ asset('storage/' . Auth::user()->image) }}" alt="Profile" class="img-thumbnail"/>
+                                                    <img src="{{ asset('storage/' . Auth::user()->image) }}" alt="Profile" class="rounded-circle"/>
                                                 @endif
                                             </a>
                                         </div>
                                         <div class="content">
                                             <h5 class="name">
-                                                <a href="{{ route('admin#details') }}" class="text-decoration-none">{{ Auth::user()->username }}</a>
+                                                <a href="{{ route('user#editProfilePage') }}" class="text-decoration-none">{{ Auth::user()->username }}</a>
                                             </h5>
                                             <span class="email">{{ Auth::user()->email }}</span>
                                         </div>
                                     </div>
                                     <div class="account-dropdown__body">
                                         <div class="account-dropdown__item">
-                                            <a href="{{ route('admin#details') }}" class="text-decoration-none">
+                                            <a href="{{ route('user#editProfilePage') }}" class="text-decoration-none">
                                                 <i class="zmdi zmdi-account"></i>Account</a>
                                         </div>
                                     </div>
                                     <div class="account-dropdown__body">
                                         <div class="account-dropdown__item">
-                                            <a href="{{ route('admin#changePasswordPage') }}" class="text-decoration-none">
+                                            <a href="{{ route('user#changePasswordPage') }}" class="text-decoration-none">
                                                 <i class="zmdi zmdi-key"></i>Change Password</a>
                                         </div>
                                     </div>
@@ -244,7 +248,6 @@
 
 
 
-    {{-- Bootstrap  --}}
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     <!-- Jquery JS-->
     <script src="{{ asset('admin/vendor/jquery-3.2.1.min.js') }}"></script>
