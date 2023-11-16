@@ -6,6 +6,29 @@
         <div class="row px-xl-5">
             <!-- Shop Sidebar Start -->
             <div class="col-lg-3 col-md-4">
+                <!-- Categories Start -->
+                <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Filter by category</span></h5>
+                <div class="bg-light p-4 mb-30">
+                    <form>
+                        <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
+                            <input type="checkbox" class="custom-control-input" checked id="price-all">
+                            <label class="custom-control-label" for="price-all">All Categories</label>
+                            <span class="badge border font-weight-normal">{{ count($products) }}</span>
+                        </div>
+
+                        @if (isset($categories) && count($categories) > 0)
+                            @foreach ($categories as $category)
+                                <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
+                                    <input type="checkbox" class="custom-control-input" id="price-1">
+                                    <label class="custom-control-label" for="price-1">{{ $category->category_name }}</label>
+                                    <span class="badge border font-weight-normal">-</span>
+                                </div>
+                            @endforeach
+                        @endif
+                    </form>
+                </div>
+                <!-- Categories End -->
+
                 <!-- Price Start -->
                 <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Filter by price</span></h5>
                 <div class="bg-light p-4 mb-30">
@@ -154,4 +177,12 @@
         </div>
     </div>
     <!-- Shop End -->
+@endsection
+
+@section('scriptSource')
+    <script>
+        $(document).ready(function() {
+            alert('hello');
+        })
+    </script>
 @endsection

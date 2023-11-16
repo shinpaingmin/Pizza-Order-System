@@ -6,6 +6,7 @@ use Storage;
 use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Product;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -19,8 +20,9 @@ class UserController extends Controller
     // direct user home page
     public function home() {
         $products = Product::orderBy('created_at', 'desc')->get();
+        $categories = Category::orderBy('category_name', 'asc')->get();
 
-        return view('user.main.home', compact('products'));
+        return view('user.main.home', compact(['products', 'categories']));
     }
 
     // direct change password page
