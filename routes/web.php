@@ -6,6 +6,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\User\UserController;
+use App\Http\Controllers\User\AjaxController;
 
 /*
 |--------------------------------------------------------------------------
@@ -99,6 +100,10 @@ Route::middleware([
             Route::prefix('profile')->group(function() {
                 Route::get('/edit', [UserController::class, 'editProfile'])->name('user#editProfilePage');
                 Route::post('/update/{id}', [UserController::class, 'updateProfile'])->name('user#updateProfile');
+            });
+
+            Route::prefix('ajax')->group(function() {
+                Route::get('product/list', [AjaxController::class, 'productList'])->name('ajax#productList');
             });
         });
     });
