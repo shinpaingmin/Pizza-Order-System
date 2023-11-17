@@ -122,47 +122,55 @@
                             </div>
                             <div class="ml-2">
                                 <div class="dropdown">
-                                    <button class="btn btn-sm btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    {{-- <button class="btn btn-sm btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                       Sorting
-                                    </button>
-                                    <ul class="dropdown-menu dropdown-menu-right">
+                                    </button> --}}
+                                    {{-- <ul class="dropdown-menu dropdown-menu-right">
                                       <li><a class="dropdown-item" href="#">Ascending</a></li>
                                       <li><a class="dropdown-item" href="#">Descending</a></li>
-                                    </ul>
+                                    </ul> --}}
+                                    <select name="sorting" id="sortingOption" class="form-control">
+                                        <option value="" selected disabled>Order by date ...</option>
+                                        <option value="asc">Ascending</option>
+                                        <option value="desc">Descending</option>
+                                    </select>
                                   </div>
                             </div>
                         </div>
                     </div>
 
                     @if (isset($products) && count($products) > 0)
+                    <div class="row" id="dataList">
                         @foreach ($products as $product)
-                            <div class="col-lg-4 col-md-6 col-sm-6 pb-1">
-                                <div class="product-item bg-light mb-4">
-                                    <div class="product-img position-relative overflow-hidden" style="width: 325px; height: 250px">
-                                        <img class="img-fluid w-100 h-100 object-cover" src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->product_name }}">
-                                        <div class="product-action">
-                                            <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-shopping-cart"></i></a>
-                                            <a class="btn btn-outline-dark btn-square" href=""><i class="far fa-heart"></i></a>
-                                            <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-sync-alt"></i></a>
-                                            <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-search"></i></a>
-                                        </div>
+                        <div class="col-lg-4 col-md-6 col-sm-6 pb-1 w-100" id="myForm">
+                            <div class="product-item bg-light mb-4 w-100">
+                                <div class="product-img position-relative overflow-hidden" style="width: 100%; height: 250px">
+                                    <img class="img-fluid w-100 h-100 object-cover" src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->product_name }}">
+                                    <div class="product-action">
+                                        <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-shopping-cart"></i></a>
+                                        <a class="btn btn-outline-dark btn-square" href=""><i class="far fa-heart"></i></a>
+                                        <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-sync-alt"></i></a>
+                                        <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-search"></i></a>
                                     </div>
-                                    <div class="text-center py-4">
-                                        <a class="h6 text-decoration-none text-truncate" href="">{{ $product->product_name }}</a>
-                                        <div class="d-flex align-items-center justify-content-center mt-2">
-                                            <h5>{{ $product->price }} kyats</h5><h6 class="text-muted ml-2"><del>25000</del></h6>
-                                        </div>
-                                        <div class="d-flex align-items-center justify-content-center mb-1">
-                                            <small class="fa fa-star text-primary mr-1"></small>
-                                            <small class="fa fa-star text-primary mr-1"></small>
-                                            <small class="fa fa-star text-primary mr-1"></small>
-                                            <small class="fa fa-star text-primary mr-1"></small>
-                                            <small class="fa fa-star text-primary mr-1"></small>
-                                        </div>
+                                </div>
+                                <div class="text-center py-4">
+                                    <a class="h6 text-decoration-none text-truncate" href="">{{ $product->product_name }}</a>
+                                    <div class="d-flex align-items-center justify-content-center mt-2">
+                                        <h5>{{ $product->price }} kyats</h5><h6 class="text-muted ml-2"><del>25000</del></h6>
+                                    </div>
+                                    <div class="d-flex align-items-center justify-content-center mb-1">
+                                        <small class="fa fa-star text-primary mr-1"></small>
+                                        <small class="fa fa-star text-primary mr-1"></small>
+                                        <small class="fa fa-star text-primary mr-1"></small>
+                                        <small class="fa fa-star text-primary mr-1"></small>
+                                        <small class="fa fa-star text-primary mr-1"></small>
                                     </div>
                                 </div>
                             </div>
+                        </div>
                         @endforeach
+                    </div>
+
                     @else
                         <div class="d-flex justify-content-center align-items-center">
                             <img src="{{ asset('image/no-products.png') }}" alt="no categories available">
@@ -182,7 +190,110 @@
 @section('scriptSource')
     <script>
         $(document).ready(function() {
-            alert('hello');
+            // $.ajax({
+            //     type: 'get',
+            //     url: 'http://localhost:8000/user/ajax/product/list',
+            //     dataType: 'json',
+            //     crossDomain: true,
+            //     success: function(res) {
+            //         console.log(res);
+            //     }
+            // })
+
+            $('#sortingOption').change(function() {
+                $sortingOption = $('#sortingOption').val();
+
+                if($sortingOption === 'asc') {
+                    $.ajax({
+                        type: 'get',
+                        url: 'http://localhost:8000/user/ajax/product/list',
+                        data: {'status': 'asc'},
+                        dataType: 'json',
+                        crossDomain: true,
+                        success: function(res) {
+                            // console.log(res[0].product_name);
+                            $list = '';
+
+                            for ($i = 0; $i < res.length; $i++) {
+
+                                $list += `
+                                <div class="col-lg-4 col-md-6 col-sm-6 pb-1" id="myForm">
+                                <div class="product-item bg-light mb-4">
+                                    <div class="product-img position-relative overflow-hidden" style="width: 100%; height: 250px">
+                                        <img class="img-fluid w-100 h-100 object-cover" src="{{ asset('storage/${res[$i].image}') }}" alt="${res[$i].product_name}">
+                                        <div class="product-action">
+                                            <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-shopping-cart"></i></a>
+                                            <a class="btn btn-outline-dark btn-square" href=""><i class="far fa-heart"></i></a>
+                                            <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-sync-alt"></i></a>
+                                            <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-search"></i></a>
+                                        </div>
+                                    </div>
+                                    <div class="text-center py-4">
+                                        <a class="h6 text-decoration-none text-truncate" href="">${res[$i].product_name}</a>
+                                        <div class="d-flex align-items-center justify-content-center mt-2">
+                                            <h5>${res[$i].price} kyats</h5><h6 class="text-muted ml-2"><del>25000</del></h6>
+                                        </div>
+                                        <div class="d-flex align-items-center justify-content-center mb-1">
+                                            <small class="fa fa-star text-primary mr-1"></small>
+                                            <small class="fa fa-star text-primary mr-1"></small>
+                                            <small class="fa fa-star text-primary mr-1"></small>
+                                            <small class="fa fa-star text-primary mr-1"></small>
+                                            <small class="fa fa-star text-primary mr-1"></small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                                `;
+                            }
+                            $('#dataList').html($list);
+                        }
+                    })
+                } else if($sortingOption === 'desc') {
+                    $.ajax({
+                        type: 'get',
+                        url: 'http://localhost:8000/user/ajax/product/list',
+                        data: {'status': 'desc'},
+                        dataType: 'json',
+                        crossDomain: true,
+                        success: function(res) {
+                            $list = '';
+
+                            for ($i = 0; $i < res.length; $i++) {
+
+                                $list += `
+                                <div class="col-lg-4 col-md-6 col-sm-6 pb-1" id="myForm">
+                                <div class="product-item bg-light mb-4">
+                                    <div class="product-img position-relative overflow-hidden" style="width: 100%; height: 250px">
+                                        <img class="img-fluid w-100 h-100 object-cover" src="{{ asset('storage/${res[$i].image}') }}" alt="${res[$i].product_name}">
+                                        <div class="product-action">
+                                            <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-shopping-cart"></i></a>
+                                            <a class="btn btn-outline-dark btn-square" href=""><i class="far fa-heart"></i></a>
+                                            <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-sync-alt"></i></a>
+                                            <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-search"></i></a>
+                                        </div>
+                                    </div>
+                                    <div class="text-center py-4">
+                                        <a class="h6 text-decoration-none text-truncate" href="">${res[$i].product_name}</a>
+                                        <div class="d-flex align-items-center justify-content-center mt-2">
+                                            <h5>${res[$i].price} kyats</h5><h6 class="text-muted ml-2"><del>25000</del></h6>
+                                        </div>
+                                        <div class="d-flex align-items-center justify-content-center mb-1">
+                                            <small class="fa fa-star text-primary mr-1"></small>
+                                            <small class="fa fa-star text-primary mr-1"></small>
+                                            <small class="fa fa-star text-primary mr-1"></small>
+                                            <small class="fa fa-star text-primary mr-1"></small>
+                                            <small class="fa fa-star text-primary mr-1"></small>
+                                        </div>
+                                    </div>
+                                </div>
+                                </div>
+                                `;
+                                }
+                                $('#dataList').html($list);
+                        }
+                    })
+                }
+            })
         })
     </script>
 @endsection
