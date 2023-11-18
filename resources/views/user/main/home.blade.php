@@ -11,17 +11,23 @@
                 <div class="bg-light p-4 mb-30">
                     <form>
                         <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                            <input type="checkbox" class="custom-control-input" checked id="price-all">
-                            <label class="custom-control-label" for="price-all">All Categories</label>
-                            <span class="badge border font-weight-normal">{{ count($products) }}</span>
+
+                            <a href="{{ route('user#home') }}" class="text-muted" for="price-all">All Categories</a>
+                            <span class="badge border font-weight-normal">{{ count($categories) }}</span>
                         </div>
 
                         @if (isset($categories) && count($categories) > 0)
                             @foreach ($categories as $category)
-                                <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
+                                {{-- <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
                                     <input type="checkbox" class="custom-control-input" id="price-1">
                                     <label class="custom-control-label" for="price-1">{{ $category->category_name }}</label>
                                     <span class="badge border font-weight-normal">-</span>
+                                </div> --}}
+
+                                <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
+
+                                    <a  href="{{ route('user#filter', $category->id) }}" class="text-muted" for="price-1">{{ $category->category_name }}</a>
+
                                 </div>
                             @endforeach
                         @endif
@@ -140,7 +146,7 @@
                     </div>
 
                     @if (isset($products) && count($products) > 0)
-                    <div class="row" id="dataList">
+                    <div class="row w-100" id="dataList">
                         @foreach ($products as $product)
                         <div class="col-lg-4 col-md-6 col-sm-6 pb-1 w-100" id="myForm">
                             <div class="product-item bg-light mb-4 w-100">
@@ -148,9 +154,10 @@
                                     <img class="img-fluid w-100 h-100 object-cover" src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->product_name }}">
                                     <div class="product-action">
                                         <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-shopping-cart"></i></a>
-                                        <a class="btn btn-outline-dark btn-square" href=""><i class="far fa-heart"></i></a>
+                                        {{-- <a class="btn btn-outline-dark btn-square" href=""><i class="far fa-heart"></i></a>
                                         <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-sync-alt"></i></a>
-                                        <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-search"></i></a>
+                                        <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-search"></i></a> --}}
+                                        <a class="btn btn-outline-dark btn-square" href="{{ route('user#pizzaDetails', $product->id) }}"><i class="fa fa-info-circle"></i></a>
                                     </div>
                                 </div>
                                 <div class="text-center py-4">
