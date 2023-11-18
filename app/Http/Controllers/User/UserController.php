@@ -87,6 +87,21 @@ class UserController extends Controller
         return redirect()->route('user#editProfilePage')->with(['updateSuccess' => 'Updated Successfully!']);
     }
 
+    // filter pizza
+    public function filter($categoryId) {
+        $products = Product::where('category_id', $categoryId)->orderBy('created_at', 'desc')->get();
+        $categories = Category::orderBy('category_name', 'asc')->get();
+
+        return view('user.main.home', compact(['products', 'categories']));
+    }
+
+    // direct product detail page
+    public function pizzaDetails($pizzaId) {
+        $pizza = Product::where('id', $pizzaId)->first();
+        $pizzaList = Product::get();
+        return view('user.main.details', compact('pizza', 'pizzaList'));
+    }
+
     // password validation function
     private function passwordValidation($request) {
         Validator::make($request->all(), [
