@@ -28,6 +28,9 @@
             <div class="col-lg-7 h-auto mb-30">
                 <div class="h-100 bg-light p-30">
                     <h3>{{ $pizza->product_name }}</h3>
+                    <input type="hidden" value="{{ Auth::user()->id }}" id="userId">
+                    <input type="hidden" value="{{ $pizza->id }}" id="pizzaId">
+                    <input type="hidden" value="{{ $pizza->price }}" id="pizzaPrice">
                     <div class="d-flex mb-3">
                         {{-- <div class="text-primary mr-2">
                             <small class="fas fa-star"></small>
@@ -47,14 +50,15 @@
                                     <i class="fa fa-minus"></i>
                                 </button>
                             </div>
-                            <input type="text" class="form-control bg-secondary border-0 text-center" value="1">
+                            <input type="text" class="form-control bg-secondary border-0 text-center" value="1" id="orderCount">
+
                             <div class="input-group-btn">
                                 <button class="btn btn-primary btn-plus">
                                     <i class="fa fa-plus"></i>
                                 </button>
                             </div>
                         </div>
-                        <button class="btn btn-primary px-3"><i class="fa fa-shopping-cart mr-1"></i> Add To
+                        <button class="btn btn-primary px-3" id="addToCartBtn" type="button"><i class="fa fa-shopping-cart mr-1"></i> Add To
                             Cart</button>
                     </div>
                     <div class="d-flex pt-2">
@@ -121,5 +125,50 @@
         </div>
     </div>
     <!-- Products End -->
+@endsection
+
+@section('scriptSource')
+    <script>
+        $(document).ready(function() {
+            $('#addToCartBtn').click(function() {
+                $pizzaCount = $('#orderCount').val();
+                $userId = $('#userId').val();
+                $pizzaId = $('#pizzaId').val();
+                $pizzaPrice = $('#pizzaPrice').val();
+
+                $jsonData = {
+                    'pizzaCount': $pizzaCount,
+                    'userId': $userId,
+                    'pizzaId': $pizzaId,
+                    'totalPrice': $pizzaCount * $pizzaPrice
+                };
+
+
+
+                $.ajax({
+                    type: 'get',
+                    url: 'http://localhost:8000/user/ajax/addToCart',
+                    data: $jsonData,
+                    dataType: 'json',
+                    headers: {
+                        'Content-Type': 'application/json'
+
+                    },
+                    crossDomain: true,
+                    success: function(response) {
+                        console.log(response);
+                        // Handle the successful response
+                        if(response.status === 'success') {
+                            window.location.href = 'http://localhost:8000/user/home';
+                        }
+                    },
+                    error: function(error) {
+                        console.error(error);
+                        // Handle the error
+                    }
+                })
+            })
+        })
+    </script>
 @endsection
 
