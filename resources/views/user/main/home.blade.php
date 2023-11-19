@@ -230,9 +230,8 @@
                                         <img class="img-fluid w-100 h-100 object-cover" src="{{ asset('storage/${res[$i].image}') }}" alt="${res[$i].product_name}">
                                         <div class="product-action">
                                             <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-shopping-cart"></i></a>
-                                            <a class="btn btn-outline-dark btn-square" href=""><i class="far fa-heart"></i></a>
-                                            <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-sync-alt"></i></a>
-                                            <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-search"></i></a>
+
+                                            <a class="btn btn-outline-dark btn-square" href="{{ route('user#pizzaDetails', $product->id) }}"><i class="fa fa-info-circle"></i></a>
                                         </div>
                                     </div>
                                     <div class="text-center py-4">
@@ -274,9 +273,8 @@
                                         <img class="img-fluid w-100 h-100 object-cover" src="{{ asset('storage/${res[$i].image}') }}" alt="${res[$i].product_name}">
                                         <div class="product-action">
                                             <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-shopping-cart"></i></a>
-                                            <a class="btn btn-outline-dark btn-square" href=""><i class="far fa-heart"></i></a>
-                                            <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-sync-alt"></i></a>
-                                            <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-search"></i></a>
+
+                                            <a class="btn btn-outline-dark btn-square" href="{{ route('user#pizzaDetails', $product->id) }}"><i class="fa fa-info-circle"></i></a>
                                         </div>
                                     </div>
                                     <div class="text-center py-4">
