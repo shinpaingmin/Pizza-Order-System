@@ -2,6 +2,7 @@
 
 namespace App\Http;
 
+
 use App\Http\Middleware\UserAuthMiddleware;
 use App\Http\Middleware\AdminAuthMiddleware;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
@@ -23,6 +24,7 @@ class Kernel extends HttpKernel
         \Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
         \App\Http\Middleware\TrimStrings::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
+        \App\Http\Middleware\CorsMiddleware::class
     ];
 
     /**
@@ -68,5 +70,6 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'admin_auth' => AdminAuthMiddleware::class,
         'user_auth' => UserAuthMiddleware::class
+        // 'cors' => CorsMiddleware::class
     ];
 }
