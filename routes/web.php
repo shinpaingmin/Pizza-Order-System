@@ -98,6 +98,11 @@ Route::middleware([
 
             });
 
+            Route::prefix('cart')->group(function() {
+                Route::get('/list', [UserController::class, 'cartList'])->name('user#cartList');
+
+            });
+
             Route::prefix('password')->group(function() {
                 Route::get('/change', [UserController::class, 'changePasswordPage'])->name('user#changePasswordPage');
                 Route::post('/change', [UserController::class, 'changePassword'])->name('user#changePassword');
@@ -112,6 +117,8 @@ Route::middleware([
                 Route::prefix('ajax')->group(function() {
                     Route::get('product/list', [AjaxController::class, 'productList'])->name('ajax#productList');
                     Route::get('/addToCart', [AjaxController::class, 'addToCart'])->name('ajax#addToCart');
+                    Route::get('/update/cart', [AjaxController::class, 'updateCart'])->name('ajax#updateCart');
+                    Route::get('delete/item', [AjaxController::class, 'deleteItem'])->name('ajax#deleteItem');
                 });
 
         });
