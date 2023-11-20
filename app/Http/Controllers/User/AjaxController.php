@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\User;
 
+use Carbon\Carbon;
 use App\Models\Cart;
 use App\Models\Product;
 use App\Models\CartItem;
@@ -47,7 +48,7 @@ class AjaxController extends Controller
 
             CartItem::where('cart_id', $cart_id)
                             ->where('product_id', $request->pizzaId)
-                            ->update(['total_price' => $total_price, 'total_qty' => $total_qty]);
+                            ->update(['total_price' => $total_price, 'total_qty' => $total_qty, 'updated_at' => Carbon::now()]);
         } else {
             // preparation for cart data
             $data = $this->getCartData($request, $cart_id);
@@ -64,6 +65,39 @@ class AjaxController extends Controller
         ];
 
         // return response in json format
+        return response()->json($response, 200);
+    }
+
+    // update cart
+    public function updateCart(Request $request) {
+        // logger($request->all());
+
+        CartItem::where('cart_id', $request->cartId)
+                ->where('product_id', $request->productId)
+                ->update([
+                    'total_qty' => $request->qty,
+                    'total_price' => $request->totalPrice
+                ]);
+
+        $response = [
+            'status' => 'success',
+            'message' => 'Updated Successfully'
+        ];
+
+        return response()->json($response, 200);
+    }
+
+    // delete item
+    public function deleteItem(Request $request) {
+        CartItem::where('cart_id', $request->cartId)
+                ->where('product_id', $request->productId)
+                ->delete();
+
+        $response = [
+            'status' => 'success',
+            'message' => 'Deleted Successfully'
+        ];
+
         return response()->json($response, 200);
     }
 
