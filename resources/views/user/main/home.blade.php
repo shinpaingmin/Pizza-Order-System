@@ -1,5 +1,13 @@
 @extends('user.layouts.master')
 
+@section('home', 'active')
+
+@if (isset($cart_items) && count($cart_items) > 0)
+    @section('cartItems', count($cart_items))
+@else
+    @section('cartItems', 0)
+@endif
+
 @section('content')
        <!-- Shop Start -->
        <div class="container-fluid">
