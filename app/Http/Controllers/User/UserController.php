@@ -4,8 +4,10 @@ namespace App\Http\Controllers\User;
 
 use Storage;
 use Carbon\Carbon;
+use App\Models\Cart;
 use App\Models\User;
 use App\Models\Product;
+use App\Models\CartItem;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -22,7 +24,21 @@ class UserController extends Controller
         $products = Product::orderBy('created_at', 'desc')->get();
         $categories = Category::orderBy('category_name', 'asc')->get();
 
-        return view('user.main.home', compact(['products', 'categories']));
+        // find cart
+        $cart = Cart::where('user_id', Auth::user()->id)->first();
+
+        // initiate with empty cart items
+        $cart_items = [];
+
+        // if the cart exits, we will fill cart items into it
+        if(!empty($cart)) {
+            $cart_id = $cart->id;
+
+            $cart_items = CartItem::where('cart_id', $cart_id)->get();
+        }
+
+
+        return view('user.main.home', compact(['products', 'categories', 'cart_items']));
     }
 
     // direct change password page
@@ -92,14 +108,60 @@ class UserController extends Controller
         $products = Product::where('category_id', $categoryId)->orderBy('created_at', 'desc')->get();
         $categories = Category::orderBy('category_name', 'asc')->get();
 
-        return view('user.main.home', compact(['products', 'categories']));
+        $cart = Cart::where('user_id', Auth::user()->id)->first();
+
+        $cart_items = [];
+
+        if(!empty($cart)) {
+            $cart_id = $cart->id;
+
+            $cart_items = CartItem::where('cart_id', $cart_id)->get();
+        }
+
+        return view('user.main.home', compact(['products', 'categories', 'cart_items']));
     }
 
     // direct product detail page
     public function pizzaDetails($pizzaId) {
         $pizza = Product::where('id', $pizzaId)->first();
         $pizzaList = Product::get();
-        return view('user.main.details', compact('pizza', 'pizzaList'));
+
+        $cart = Cart::where('user_id', Auth::user()->id)->first();
+
+        $cart_items = [];
+
+        if(!empty($cart)) {
+            $cart_id = $cart->id;
+
+            $cart_items = CartItem::where('cart_id', $cart_id)->get();
+        }
+
+        return view('user.main.details', compact('pizza', 'pizzaList', 'cart_items'));
+    }
+
+    // direct to cart list page
+    public function cartList() {
+        // find cart
+        $cart = Cart::where('user_id', Auth::user()->id)->first();
+
+        $cart_items = [];
+
+        if(!empty($cart)) {
+            $cart_id = $cart->id;
+
+            $cart_items = CartItem::select('cart_items.*', 'products.product_name', 'products.price', 'products.image')
+                            ->join('products', 'cart_items.product_id', 'products.id')
+                            ->where('cart_id', $cart_id)
+                            ->get();
+
+            $subTotal = 0;
+
+            foreach ($cart_items as $c) {
+                $subTotal += $c->total_price;
+            }
+        }
+
+        return view('user.main.cart', compact('cart_items', 'subTotal'));
     }
 
     // password validation function
