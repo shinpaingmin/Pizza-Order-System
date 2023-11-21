@@ -14,6 +14,8 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
+            $table->string('order_code');
+            $table->integer('status')->default(0);   // 0 = pending , 1 = success , 2 = reject
             $table->foreign('user_id')->references('id')->on('users');
         });
     }

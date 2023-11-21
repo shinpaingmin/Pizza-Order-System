@@ -13,7 +13,6 @@ class OrderItem extends Model
         'order_id',
         'product_id',
         'total_price',
-        'total_qty',
-        'status'
+        'total_qty'
     ];
 }

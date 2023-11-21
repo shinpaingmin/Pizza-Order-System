@@ -17,7 +17,6 @@ return new class extends Migration
             $table->unsignedBigInteger('product_id');
             $table->integer('total_price');
             $table->integer('total_qty');
-            $table->integer('status')->default(0);   // 0 = pending , 1 = success , 2 = reject
             $table->timestamps();
             $table->foreign('order_id')->references('id')->on('orders');
             $table->foreign('product_id')->references('id')->on('products');
