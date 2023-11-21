@@ -115,10 +115,11 @@ Route::middleware([
 
 
                 Route::prefix('ajax')->group(function() {
-                    Route::get('product/list', [AjaxController::class, 'productList'])->name('ajax#productList');
-                    Route::get('/addToCart', [AjaxController::class, 'addToCart'])->name('ajax#addToCart');
-                    Route::get('/update/cart', [AjaxController::class, 'updateCart'])->name('ajax#updateCart');
-                    Route::get('delete/item', [AjaxController::class, 'deleteItem'])->name('ajax#deleteItem');
+                    Route::post('product/list', [AjaxController::class, 'productList'])->name('ajax#productList');
+                    Route::post('/addToCart', [AjaxController::class, 'addToCart'])->name('ajax#addToCart');
+                    Route::post('/update/cart', [AjaxController::class, 'updateCart'])->name('ajax#updateCart');
+                    Route::post('delete/item', [AjaxController::class, 'deleteItem'])->name('ajax#deleteItem');
+                    Route::post('order', [AjaxController::class, 'order'])->name('ajax#order');
                 });
 
         });
