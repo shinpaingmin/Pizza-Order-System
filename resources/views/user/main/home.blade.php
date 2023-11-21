@@ -161,7 +161,7 @@
                                 <div class="product-img position-relative overflow-hidden" style="width: 100%; height: 250px">
                                     <img class="img-fluid w-100 h-100 object-cover" src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->product_name }}">
                                     <div class="product-action">
-                                        <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-shopping-cart"></i></a>
+                                        <a class="btn btn-outline-dark btn-square" href="#"><i class="fa fa-shopping-cart"></i></a>
                                         {{-- <a class="btn btn-outline-dark btn-square" href=""><i class="far fa-heart"></i></a>
                                         <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-sync-alt"></i></a>
                                         <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-search"></i></a> --}}
@@ -205,24 +205,19 @@
 @section('scriptSource')
     <script>
         $(document).ready(function() {
-            // $.ajax({
-            //     type: 'get',
-            //     url: 'http://localhost:8000/user/ajax/product/list',
-            //     dataType: 'json',
-            //     crossDomain: true,
-            //     success: function(res) {
-            //         console.log(res);
-            //     }
-            // })
 
             $('#sortingOption').change(function() {
                 $sortingOption = $('#sortingOption').val();
 
                 if($sortingOption === 'asc') {
+
                     $.ajax({
-                        type: 'get',
-                        url: 'http://localhost:8000/user/ajax/product/list',
-                        data: {'status': 'asc'},
+                        type: 'post',
+                        url: "{{ route('ajax#productList') }}",
+                        data: {
+                            '_token': '{{ csrf_token() }}',
+                            'status': 'asc'
+                        },
                         dataType: 'json',
                         crossDomain: true,
                         success: function(res) {
@@ -264,9 +259,12 @@
                     })
                 } else if($sortingOption === 'desc') {
                     $.ajax({
-                        type: 'get',
-                        url: 'http://localhost:8000/user/ajax/product/list',
-                        data: {'status': 'desc'},
+                        type: 'post',
+                        url: "{{ route('ajax#productList') }}",
+                        data: {
+                            '_token': '{{ csrf_token() }}',
+                            'status': 'desc'
+                        },
                         dataType: 'json',
                         crossDomain: true,
                         success: function(res) {

@@ -143,6 +143,7 @@
                 $pizzaPrice = $('#pizzaPrice').val();
 
                 $jsonData = {
+                    '_token': '{{ csrf_token() }}',
                     'pizzaCount': $pizzaCount,
                     'userId': $userId,
                     'pizzaId': $pizzaId,
@@ -152,14 +153,10 @@
 
 
                 $.ajax({
-                    type: 'get',
-                    url: 'http://localhost:8000/user/ajax/addToCart',
+                    type: 'post',
+                    url: "{{ route('ajax#addToCart') }}",
                     data: $jsonData,
                     dataType: 'json',
-                    headers: {
-                        'Content-Type': 'application/json'
-
-                    },
                     crossDomain: true,
                     success: function(response) {
                         console.log(response);
