@@ -6,6 +6,7 @@ use Storage;
 use Carbon\Carbon;
 use App\Models\Cart;
 use App\Models\User;
+use App\Models\Order;
 use App\Models\Product;
 use App\Models\CartItem;
 use App\Models\Category;
@@ -146,6 +147,8 @@ class UserController extends Controller
 
         $cart_items = [];
 
+        $subTotal = 0;
+
         if(!empty($cart)) {
             $cart_id = $cart->id;
 
@@ -154,14 +157,18 @@ class UserController extends Controller
                             ->where('cart_id', $cart_id)
                             ->get();
 
-            $subTotal = 0;
+
 
             foreach ($cart_items as $c) {
                 $subTotal += $c->total_price;
             }
         }
 
-        return view('user.main.cart', compact('cart_items', 'subTotal'));
+        $order = Order::where('user_id', Auth::user()->id)
+                ->where('status', 0)
+                ->get();
+
+        return view('user.main.cart', compact('cart_items', 'subTotal', 'order'));
     }
 
     // password validation function

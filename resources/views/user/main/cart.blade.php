@@ -91,7 +91,9 @@
                                 <h5>Total</h5>
                                 <h5 id="totalPrice">{{ $subTotal ? $subTotal + 3000 : 0 }} kyats</h5>
                             </div>
-                            <button class="btn btn-block btn-primary font-weight-bold my-3 py-3">Proceed To Checkout</button>
+                            <button class="btn btn-block btn-primary font-weight-bold my-3 py-3" id="orderBtn" @if(count($order) > 0) disabled @endif>
+                                {{ count($order) > 0 ? "You've Already Ordered One!" : "Proceed To Order Now" }}
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -105,6 +107,42 @@
 @section('scriptSource')
     <script>
         $(document).ready(function() {
+
+            $('#orderBtn').click(function() {
+                $orderList = [];
+
+                $orderCode = Math.floor(Math.random() * 100000000000)
+
+                $('#dataTable tbody tr').each(function(index, row) {
+                    $orderList.push({
+                        'user_id': {{ Auth::user()->id }},
+                        'product_id': $(row).find('#pizzaId').val(),
+                        'cart_id': $('#cartId').val(),
+                        'total_qty': Number($(row).find('#qty').val()),
+                        'total_price': Number($(row).find('#total').text().replace('kyats', '')),
+                        'order_code': 'POS' + $orderCode
+                    })
+                });
+
+                $.ajax({
+                    type: 'post',
+                    url: "{{ route('ajax#order') }}",
+                    dataType: 'json',
+                    data: {...$orderList},
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    crossDomain: true,
+                    success: function(res) {
+                        if(res.status === 'success') {
+                            window.location.href = "http://localhost:8000/user/home";
+                        }
+                    },
+                    error: function(err) {
+                        console.log(err);
+                    }
+                })
+            })
 
             $('.btn-plus').click(function() {
                 $parentNode = $(this).parents('tr');
@@ -122,6 +160,7 @@
 
 
                 $jsonData = {
+                    '_token': '{{ csrf_token() }}',
                     'cartId': $('#cartId').val(),
                     'productId': $parentNode.find('#pizzaId').val(),
                     'qty': $qty,
@@ -129,8 +168,8 @@
                 }
 
                 $.ajax({
-                    type: 'get',
-                    url: 'http://localhost:8000/user/ajax/update/cart',
+                    type: 'post',
+                    url: "{{ route('ajax#updateCart') }}",
                     dataType: 'json',
                     crossDomain: true,
                     data: $jsonData,
@@ -165,6 +204,7 @@
                 $total = $pizzaPrice * $qty;
 
                 $jsonData = {
+                    '_token': '{{ csrf_token() }}',
                     'cartId': $('#cartId').val(),
                     'productId': $parentNode.find('#pizzaId').val(),
                     'qty': $qty,
@@ -172,8 +212,8 @@
                 }
 
                 $.ajax({
-                    type: 'get',
-                    url: 'http://localhost:8000/user/ajax/update/cart',
+                    type: 'post',
+                    url: "{{ route('ajax#updateCart') }}",
                     dataType: 'json',
                     crossDomain: true,
                     data: $jsonData,
@@ -196,13 +236,14 @@
                 $parentNode.remove();
 
                 $jsonData = {
+                    '_token': '{{ csrf_token() }}',
                     'cartId': $('#cartId').val(),
                     'productId': $parentNode.find('#pizzaId').val(),
                 }
 
                 $.ajax({
-                    type: 'get',
-                    url: 'http://localhost:8000/user/ajax/delete/item',
+                    type: 'post',
+                    url: "{{ route('ajax#deleteItem') }}",
                     dataType: 'json',
                     crossDomain: true,
                     data: $jsonData,

@@ -4,10 +4,13 @@ namespace App\Http\Controllers\User;
 
 use Carbon\Carbon;
 use App\Models\Cart;
+use App\Models\Order;
 use App\Models\Product;
 use App\Models\CartItem;
+use App\Models\OrderItem;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class AjaxController extends Controller
 {
@@ -76,7 +79,8 @@ class AjaxController extends Controller
                 ->where('product_id', $request->productId)
                 ->update([
                     'total_qty' => $request->qty,
-                    'total_price' => $request->totalPrice
+                    'total_price' => $request->totalPrice,
+                    'updated_at' => Carbon::now()
                 ]);
 
         $response = [
@@ -96,6 +100,39 @@ class AjaxController extends Controller
         $response = [
             'status' => 'success',
             'message' => 'Deleted Successfully'
+        ];
+
+        return response()->json($response, 200);
+    }
+
+    // order items
+    public function order(Request $request) {
+        $requestArr = $request->all();
+
+        // create an order, take order id
+        $order_id = Order::create([
+            'user_id' => Auth::user()->id,
+            'order_code' => $requestArr[0]['order_code']
+        ])->id;
+
+        foreach ($request->all() as $item) {
+            OrderItem::create([
+                'order_id' => $order_id,
+                'product_id' => $item['product_id'],
+                'total_price' => $item['total_price'],
+                'total_qty' => $item['total_qty']
+            ]);
+        }
+
+        // delete cart items and cart
+
+        CartItem::where('cart_id', $requestArr[0]['cart_id'])->delete();
+
+        Cart::where('user_id', Auth::user()->id)->delete();
+
+        $response = [
+            'status' => 'success',
+            'message' => 'Ordered Successfully'
         ];
 
         return response()->json($response, 200);
