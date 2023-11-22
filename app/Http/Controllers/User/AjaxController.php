@@ -109,7 +109,20 @@ class AjaxController extends Controller
     public function order(Request $request) {
         $requestArr = $request->all();
 
-        // create an order, take order id
+        $order = Order::where('user_id', Auth::user()->id)
+                ->where('status', 0)
+                ->get();
+
+        if(count($order) > 0) {
+            $response = [
+                'status' => '422',
+                'message' => 'Not available'
+            ];
+
+        }
+        else
+        {
+            // create an order, take order id
         $order_id = Order::create([
             'user_id' => Auth::user()->id,
             'order_code' => $requestArr[0]['order_code']
@@ -134,6 +147,10 @@ class AjaxController extends Controller
             'status' => 'success',
             'message' => 'Ordered Successfully'
         ];
+
+        }
+
+
 
         return response()->json($response, 200);
     }
