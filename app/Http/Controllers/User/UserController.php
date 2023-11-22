@@ -171,6 +171,19 @@ class UserController extends Controller
         return view('user.main.cart', compact('cart_items', 'subTotal', 'order'));
     }
 
+    // direct order history page
+    public function history() {
+        $orders = Order::select('orders.*', 'order_items.total_price', 'order_items.total_qty', 'products.*')
+                ->join('order_items', 'orders.id', 'order_items.order_id')
+                ->join('products', 'order_items.product_id', 'products.id')
+                ->where('orders.user_id', Auth::user()->id)
+                ->orderBy('order_items.created_at', 'desc')
+                ->paginate(5);
+
+
+        return view('user.main.history', compact('orders'));
+    }
+
     // password validation function
     private function passwordValidation($request) {
         Validator::make($request->all(), [
