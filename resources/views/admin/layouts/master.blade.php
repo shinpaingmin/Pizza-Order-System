@@ -71,6 +71,11 @@
                                 <i class="fa fa-users-gear col-2"></i> Admin
                             </a>
                         </li>
+                        <li class="@yield('order') has-sub">
+                            <a class="js-arrow text-decoration-none" href="{{ route('admin#orderList') }}">
+                                <i class="fa-solid fa-list-check col-2"></i> Order List
+                            </a>
+                        </li>
                     </ul>
                 </nav>
             </div>
@@ -196,6 +201,8 @@
 
     </div>
 
+
+
     {{-- Bootstrap  --}}
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     <!-- Jquery JS-->
@@ -222,7 +229,11 @@
     <!-- Main JS-->
     <script src="{{ asset('admin/js/main.js') }}"></script>
 
+    {{-- Jquery  --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
 </body>
+@yield('scriptSource')
 
 </html>
 <!-- end document-->

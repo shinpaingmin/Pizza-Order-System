@@ -36,7 +36,7 @@
                                         </div>
                                     </td>
 
-                                    <td class="align-middle"><img src="img/product-1.jpg" alt="" style="width: 50px;">{{ $cart_item->product_name }}</td>
+                                    <td class="align-middle">{{ $cart_item->product_name }}</td>
                                     <td class="align-middle" id="pizzaPrice">{{ $cart_item->price }} kyats</td>
 
                                     <td class="align-middle">
@@ -46,7 +46,7 @@
                                                 <i class="fa fa-minus"></i>
                                                 </button>
                                             </div>
-                                            <input type="text" class="form-control form-control-sm bg-secondary border-0 text-center" id="qty" value="{{ $cart_item->total_qty }}">
+                                            <span class="form-control form-control-sm bg-secondary border-0 text-center" id="qty" >{{ $cart_item->total_qty }} </span>
                                             <div class="input-group-btn">
                                                 <button class="btn btn-sm btn-primary btn-plus" {{ $cart_item->total_qty >= 10 ? 'disabled' : '' }}>
                                                     <i class="fa fa-plus"></i>
@@ -118,7 +118,7 @@
                         'user_id': {{ Auth::user()->id }},
                         'product_id': $(row).find('#pizzaId').val(),
                         'cart_id': $('#cartId').val(),
-                        'total_qty': Number($(row).find('#qty').val()),
+                        'total_qty': Number($(row).find('#qty').text()),
                         'total_price': Number($(row).find('#total').text().replace('kyats', '')),
                         'order_code': 'POS' + $orderCode
                     })
@@ -136,6 +136,8 @@
                     success: function(res) {
                         if(res.status === 'success') {
                             window.location.href = "http://localhost:8000/user/home";
+                        } else if(res.status = '422') {
+                            window.location.href = "http://localhost:8000/user/cart/list";
                         }
                     },
                     error: function(err) {
@@ -147,7 +149,11 @@
             $('.btn-plus').click(function() {
                 $parentNode = $(this).parents('tr');
                 $pizzaPrice = $parentNode.find('#pizzaPrice').text().replace('kyats', '');
-                $qty = Number($parentNode.find('#qty').val());
+
+                $qty = Number($parentNode.find('#qty').text()) + 1;
+
+                $parentNode.find('#qty').html($qty);
+
 
                 // disable button if the qty exceeds 10
                 if($qty >= 10) {
@@ -155,6 +161,7 @@
                 } else {
                     $parentNode.find('.btn-minus').removeAttr('disabled')
                 }
+
 
                 $total = $pizzaPrice * $qty;
 
@@ -191,7 +198,10 @@
             $('.btn-minus').click(function() {
                 $parentNode = $(this).parents('tr');
                 $pizzaPrice = $parentNode.find('#pizzaPrice').text().replace('kyats', '');
-                $qty = Number($parentNode.find('#qty').val()) ;
+
+                $qty = Number($parentNode.find('#qty').text()) - 1 ;
+
+                $parentNode.find('#qty').html($qty);
 
                 // disable button if the qty lowers than 1
                 if($qty <= 1) {

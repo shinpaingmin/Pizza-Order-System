@@ -88,7 +88,10 @@
                                 <i class="fas fa-shopping-cart text-primary"></i>
                                 <span class="badge text-secondary border border-secondary rounded-circle" style="padding-bottom: 2px;">@yield('cartItems')</span>
                             </a>
-
+                            <a href="{{ route('user#history') }}" class="btn px-0 ml-3">
+                                <i class="fa-solid fa-clock-rotate-left text-warning"></i>
+                                <span class="text-warning" style="padding-bottom: 2px;">Order History</span>
+                            </a>
                         </div>
                         <div class="account-wrap ml-5 mt-1">
                             <div class="account-item clearfix js-item-menu">
