@@ -3,10 +3,11 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\User\AjaxController;
+use App\Http\Controllers\User\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -70,21 +71,15 @@ Route::middleware([
             Route::get('edit/page/{id}', [ProductController::class, 'editPage'])->name('product#editPage');
             Route::post('update/{id}', [ProductController::class, 'update'])->name('product#update');
         });
+
+        // order
+        Route::prefix('order')->group(function() {
+            Route::get('/list', [OrderController::class, 'list'])->name('admin#orderList');
+            Route::post('/status/ajax', [OrderController::class, 'ajaxStatus'])->name('admin#ajaxStatus');
+        });
     });
 
 
-
-
-    // user
-    // home
-    // Route::group([
-    //     'prefix' => 'user',
-    //     'middleware' => 'user_auth'
-    //     ], function() {
-    //     Route::get('/home', function() {
-    //         return view('user.home');
-    //     })->name('user#home');
-    // });\
 
     // user
     Route::middleware(['user_auth'])->group(function() {
@@ -92,6 +87,7 @@ Route::middleware([
         Route::prefix('user')->group(function() {
             Route::get('/home', [UserController::class, 'home'])->name('user#home');
             Route::get('/filter/{id}', [UserController::class, 'filter'])->name('user#filter');
+            Route::get('order/history', [UserController::class, 'history'])->name('user#history');
 
             Route::prefix('pizza')->group(function() {
                 Route::get('/details/{id}', [UserController::class, 'pizzaDetails'])->name('user#pizzaDetails');
