@@ -71,11 +71,17 @@
                                 <i class="fa fa-users-gear col-2"></i> Admin
                             </a>
                         </li>
+                        <li class="@yield('user') has-sub">
+                            <a class="js-arrow text-decoration-none" href="{{ route('admin#userList') }}">
+                                <i class="fa-solid fa-users col-2"></i> User
+                            </a>
+                        </li>
                         <li class="@yield('order') has-sub">
                             <a class="js-arrow text-decoration-none" href="{{ route('admin#orderList') }}">
                                 <i class="fa-solid fa-list-check col-2"></i> Order List
                             </a>
                         </li>
+
                     </ul>
                 </nav>
             </div>

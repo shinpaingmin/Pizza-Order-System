@@ -137,7 +137,7 @@
                         if(res.status === 'success') {
                             window.location.href = "http://localhost:8000/user/home";
                         } else if(res.status = '422') {
-                            window.location.href = "http://localhost:8000/user/cart/list";
+                            location.reload();
                         }
                     },
                     error: function(err) {

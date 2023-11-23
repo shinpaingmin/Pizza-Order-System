@@ -5,9 +5,9 @@
 @section('order', 'active')
 
 @section('searchbar')
-    <form class="form-header" action="{{ route('product#list') }}" method="GET">
+    <form class="form-header" action="{{ route('admin#orderList') }}" method="GET">
         @csrf
-        <input class="au-input au-input--xl" type="text" name="searchKey" placeholder="Search for products..." value="{{ request('searchKey') }}"/>
+        <input class="au-input au-input--xl" type="text" name="searchKey" placeholder="Search for order code..." value="{{ request('searchKey') }}"/>
         <button class="au-btn--submit" type="submit">
             <i class="zmdi zmdi-search"></i>
         </button>
@@ -38,26 +38,26 @@
 
                     <div class="d-flex">
                         <label for="" class="mt-2 mr-4">Order Status</label>
-                        <select id="orderStatus" class="form-control col-2">
+                        <select id="orderStatus" class="form-control col-2 mr-2">
                             <option value="">All</option>
                             <option value="0">Pending</option>
                             <option value="1">Success</option>
                             <option value="2">Reject</option>
                         </select>
+                        <button type="button"  class="btn btn-small btn-dark text-white h-100">
+                            <i class="fa-solid fa-database mr-2"></i> <span id="total">{{ isset($orders) ? count($orders) : '' }}</span>
+                        </button>
                     </div>
 
-                    @if(isset($orders) && count($orders) > 0)
+
                     <div class="table-responsive table-responsive-data2" style="overflow-x: auto">
-                        <table class="table table-data2">
+                        <table class="table table-data2" id="dataTable">
+                            @if(isset($orders) && count($orders) > 0)
                             <thead>
                                 <tr>
                                     <th style="background: #e5e5e5">Order Code</th>
-                                    <th style="background: #e5e5e5" >Product Name</th>
                                     <th style="background: #e5e5e5">Username</th>
-                                    <th style="background: #e5e5e5">Total Price</th>
-                                    <th style="background: #e5e5e5">Qty</th>
-
-                                    <th style="background: #e5e5e5">Date</th>
+                                    <th style="background: #e5e5e5">Ordered Date</th>
                                     <th style="background: #e5e5e5">Status</th>
                                 </tr>
                             </thead>
@@ -65,34 +65,21 @@
 
                                     @foreach ($orders as $order_item)
                                     <tr class="tr-shadow">
-                                        {{-- <td>
-                                            <div class="" style="width: 150px; height: 125px">
-                                                <img src="{{ asset('storage/' . $order_item->image) }}" alt="pizza" class="img-thumbnail shadow-sm object-cover w-100 h-100 " style="object-position: center">
-                                            </div>
-                                        </td> --}}
-                                        <td>{{ $order_item->order_code }}</td>
+                                        <input type="hidden" value="{{ $order_item->id }}" id="orderId">
                                         <td>
-                                            <span class="text-capitalize">{{ $order_item->product_name }}</span>
+                                            <a href="{{ route('admin#listInfo', $order_item->id) }}" class="text-decoration-none">
+                                                {{ $order_item->order_code }}
+                                            </a>
                                         </td>
                                         <td>
                                             <span class="text-capitalize">{{ $order_item->username }}</span>
                                         </td>
-                                        <td class="" >
-                                            <span> {{ $order_item->total_price }} MMK</span>
-                                        </td>
-                                        <td>
-                                            <span>{{ $order_item->total_qty }}</span>
-                                        </td>
-
-                                        {{-- <td style="width: 400px !important; display:inline-block; margin-top: 40px">
-                                            <span >{{ $order_item->description }}</span>
-                                        </td> --}}
                                         <td>
                                             <span>{{ Carbon\Carbon::parse($order_item->created_at)->format('F j, Y') }}</span>
                                         </td>
 
                                         <td>
-                                            <select name="status" class="form-control">
+                                            <select name="status" class="form-control statusChange" id="">
                                                 <option value="0" @if($order_item->status === 0) selected @endif>Pending</option>
                                                 <option value="1" @if($order_item->status === 1) selected @endif>Success</option>
                                                 <option value="2" @if($order_item->status === 2) selected @endif>Reject</option>
@@ -103,20 +90,21 @@
                                     @endforeach
 
                             </tbody>
+
+                            @else
+                                <div class="d-flex justify-content-center align-items-center">
+                                    <img src="{{ asset('image/no-products.png') }}" alt="no products available">
+                                </div>
+                            @endif
                         </table>
 
                     </div>
                     <!-- END DATA TABLE -->
 
-                    @else
-                        <div class="d-flex justify-content-center align-items-center">
-                            <img src="{{ asset('image/no-products.png') }}" alt="no products available">
-                        </div>
-                    @endif
 
 
-                    <div class="mt-4">
-                        {{-- {{ $categories->links() }} --}}
+
+                    <div class="mt-4" id="pagination">
 
                         @if(isset($orders))
                             {{ $orders->appends(request()->query())->links() }}
@@ -133,6 +121,7 @@
 @section('scriptSource')
     <script>
         $(document).ready(function() {
+            // filter order status
             $('#orderStatus').change(function() {
                 console.log($('#orderStatus').val());
 
@@ -148,13 +137,132 @@
                     },
                     crossDomain: true,
                     success: function(res) {
-                        console.log(res);
+                        if(res.status === '200') {
+                            const { data } = res;   // destructure
+
+
+                            $list = '';
+
+                            if(data.length > 0) {
+                                $tableHeader = `
+                                <thead>
+                                    <tr>
+                                        <th style="background: #e5e5e5">Order Code</th>
+                                        <th style="background: #e5e5e5">Username</th>
+                                        <th style="background: #e5e5e5">Ordered Date</th>
+                                        <th style="background: #e5e5e5">Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                </tbody>
+                                `;
+
+                                $('#dataTable').html($tableHeader);
+
+
+                                for ($i = 0; $i < data.length; $i++) {
+
+                                    $dbDate = new Date(data[$i].created_at);
+                                    $date = $dbDate.getDate();
+                                    $month = $dbDate.getMonth();
+                                    $year = $dbDate.getFullYear();
+                                    console.log(data[$i].created_at);
+
+                                    $months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September',
+                                                'October', 'November', 'December'];
+
+                                    $concat = $months[$month] + " " + $date + ", " + $year;
+
+                                    $list += `
+
+
+                                            <tr class="tr-shadow">
+                                                <input type="hidden" value="${data[$i].id}" id="orderId">
+                                                <td>
+                                                    <a href="{{ url('order/listInfo/${data[$i].id}') }}" class="text-decoration-none">
+                                                        ${data[$i].order_code}
+                                                    </a>
+                                                </td>
+
+                                                <td>
+                                                    <span class="text-capitalize">${data[$i].username}</span>
+                                                </td>
+                                                <td>
+                                                    <span>${$concat}</span>
+                                                </td>
+
+                                                <td>
+                                                    <select name="status" class="form-control statusChange">
+                                                        <option value="0" ${data[$i].status === 0 ? 'selected' : ''}>Pending</option>
+                                                        <option value="1" ${data[$i].status === 1 ? 'selected' : ''}>Success</option>
+                                                        <option value="2" ${data[$i].status === 2 ? 'selected' : ''}>Reject</option>
+                                                    </select>
+                                                </td>
+                                            </tr>
+                                            <tr class="spacer"></tr>
+
+
+
+
+                                    `;
+                                }
+
+                                $('#total').html(data.length);
+                                $('#dataTable tbody').html($list);
+                                $('#pagination').html('');
+
+                                OrderStatusChangeEvent();
+
+                            } else {
+                                $list = `
+                                    <div class="d-flex justify-content-center align-items-center mt-3">
+                                        <img src="{{ asset('image/no-products.png') }}" alt="no products available">
+                                    </div>
+                                `;
+
+                                $('#dataTable').html($list);
+                                $('#total').html(data.length);
+                            }
+                        }
                     },
                     error: function(err) {
                         console.log(err);
                     }
                 });
-            })
+
+
+            });
+
+            // update order status
+            OrderStatusChangeEvent();
+
+            // update order status, reusable function
+            function OrderStatusChangeEvent() {
+                $('.statusChange').change(function() {
+                $parentNode = $(this).parents('tr');
+                $currentStatus = $parentNode.find('.statusChange').val();
+                $orderId = $parentNode.find('#orderId').val();
+
+                $.ajax({
+                    type: 'post',
+                    url: "{{ route('admin#ajaxChangeStatus') }}",
+                    dataType: 'json',
+                    data: {
+                        '_token': '{{ csrf_token() }}',
+                        'status': $currentStatus,
+                        'orderId': $orderId
+                    },
+                    crossDomain: true,
+                    success: function(res) {
+                        // location.reload()
+                    },
+                    error: function(err) {
+                        console.log(err);
+                    }
+                });
+            });
+            }
         })
     </script>
 @endsection
