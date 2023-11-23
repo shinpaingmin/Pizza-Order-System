@@ -91,12 +91,15 @@ class AdminController extends Controller
 
     // direct to admin list
     public function list() {
+        // tricky for search function
         $admins = User::when(request('searchKey'), function($query) {
-                        $query->orWhere('username', 'like', '%' . request('searchKey') . '%')
-                                ->orWhere('email', 'like', '%' . request('searchKey') . '%')
-                                ->orWhere('gender', 'like', '%' . request('searchKey') . '%')
-                                ->orWhere('phone', 'like', '%' . request('searchKey') . '%')
-                                ->orWhere('address', 'like', '%' . request('searchKey') . '%');
+                        $query->where(function($subquery) {
+                            $subquery->orWhere('username', 'like', '%' . request('searchKey') . '%')
+                            ->orWhere('email', 'like', '%' . request('searchKey') . '%')
+                            ->orWhere('gender', 'like', '%' . request('searchKey') . '%')
+                            ->orWhere('phone', 'like', '%' . request('searchKey') . '%')
+                            ->orWhere('address', 'like', '%' . request('searchKey') . '%');
+                        })->where('role', 'admin');
                     })
                     ->where('role', 'admin')->paginate(3);
 
@@ -144,6 +147,38 @@ class AdminController extends Controller
         User::create($data);
 
         return redirect()->route('admin#list')->with(['createSuccess' => 'Added Successfully!']);
+    }
+
+    // direct to user list page
+    public function userList() {
+        // tricky for search function
+        $users = User::when(request('searchKey'), function($query) {
+            $query->where(function($subquery) {
+                $subquery->orWhere('username', 'like', '%' . request('searchKey') . '%')
+                ->orWhere('email', 'like', '%' . request('searchKey') . '%')
+                ->orWhere('gender', 'like', '%' . request('searchKey') . '%')
+                ->orWhere('phone', 'like', '%' . request('searchKey') . '%')
+                ->orWhere('address', 'like', '%' . request('searchKey') . '%');
+            })->where('role', 'user');
+        })
+        ->where('role', 'user')->paginate(3);
+
+        return view('admin.user.list', compact('users'));
+    }
+
+    // promote user to admin function
+    public function promoteAdmin($id) {
+        User::where('id', $id)->update([
+            'role' => 'admin'
+        ]);
+
+        return redirect()->route('admin#userList')->with(['updateSuccess' => 'Promoted Successfully!']);
+    }
+
+    // delete users function
+    public function deleteUser($id) {
+        User::where('id', $id)->delete();
+        return redirect()->route('admin#userList')->with(['deleteSuccess' => 'Deleted Successfully!']);
     }
 
     // password validation function
