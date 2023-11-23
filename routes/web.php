@@ -125,6 +125,7 @@ Route::middleware([
                     Route::post('/update/cart', [AjaxController::class, 'updateCart'])->name('ajax#updateCart');
                     Route::post('delete/item', [AjaxController::class, 'deleteItem'])->name('ajax#deleteItem');
                     Route::post('order', [AjaxController::class, 'order'])->name('ajax#order');
+                    Route::post('increase/viewCount', [AjaxController::class, 'increaseViewCount'])->name('ajax#increaseViewCount');
                 });
 
         });
