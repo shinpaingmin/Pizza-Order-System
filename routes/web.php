@@ -2,12 +2,12 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\User\AjaxController;
-use App\Http\Controllers\User\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -76,6 +76,15 @@ Route::middleware([
         Route::prefix('order')->group(function() {
             Route::get('/list', [OrderController::class, 'list'])->name('admin#orderList');
             Route::post('/status/ajax', [OrderController::class, 'ajaxStatus'])->name('admin#ajaxStatus');
+            Route::post('/ajax/change/status', [OrderController::class, 'ajaxChangeStatus'])->name('admin#ajaxChangeStatus');
+            Route::get('listInfo/{id}', [OrderController::class, 'listInfo'])->name('admin#listInfo');
+        });
+
+        // user
+        Route::prefix('user')->group(function() {
+            Route::get('/list', [AdminController::class, 'userList'])->name('admin#userList');
+            Route::get('/promote/{id}', [AdminController::class, 'promoteAdmin'])->name('admin#promote');
+            Route::get('delete/{id}', [AdminController::class, 'deleteUser'])->name('admin#deleteUser');
         });
     });
 
