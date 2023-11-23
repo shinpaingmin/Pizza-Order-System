@@ -155,6 +155,23 @@ class AjaxController extends Controller
         return response()->json($response, 200);
     }
 
+    // increase view count function for pizza
+    public function increaseViewCount(Request $request) {
+        $pizza = Product::where('id', $request->product_id)->first();
+
+        $viewCount = [
+            'view_count' => $pizza->view_count + 1
+        ];
+
+        Product::where('id', $request->product_id)->update($viewCount);
+
+        $response = [
+            'status' => '200',
+        ];
+
+        return response()->json($response, 200);
+    }
+
     // private functions
     // get cart data
     private function getCartData($request, $cart_id) {
