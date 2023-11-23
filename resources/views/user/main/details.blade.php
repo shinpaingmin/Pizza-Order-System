@@ -45,7 +45,7 @@
                             <small class="fas fa-star-half-alt"></small>
                             <small class="far fa-star"></small>
                         </div> --}}
-                        <small class="pt-1"><i class="fa fa-eye"></i> {{ $pizza->view_count }}</small>
+                        <small class="pt-1"><i class="fa fa-eye"></i> <span id="view_count">{{ $pizza->view_count + 1 }}</span></small>
                     </div>
                     <h3 class="font-weight-semi-bold mb-4">{{ $pizza->price }} kyats</h3>
                     <p class="mb-4">{{ $pizza->description }}</p>
@@ -136,6 +136,24 @@
 @section('scriptSource')
     <script>
         $(document).ready(function() {
+
+            $.ajax({
+                type: 'post',
+                url: "{{ route('ajax#increaseViewCount') }}",
+                dataType: 'json',
+                data: {
+                    '_token': '{{ csrf_token() }}',
+                    'product_id': $('#pizzaId').val()
+                },
+                crossDomain: true,
+                success: function(res) {
+
+                },
+                error: function(err) {
+                    console.log(err);
+                }
+            })
+
             $('#addToCartBtn').click(function() {
                 $pizzaCount = $('#orderCount').val();
                 $userId = $('#userId').val();
@@ -149,8 +167,6 @@
                     'pizzaId': $pizzaId,
                     'totalPrice': $pizzaCount * $pizzaPrice
                 };
-
-
 
                 $.ajax({
                     type: 'post',
