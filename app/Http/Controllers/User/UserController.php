@@ -177,11 +177,23 @@ class UserController extends Controller
                 ->join('order_items', 'orders.id', 'order_items.order_id')
                 ->join('products', 'order_items.product_id', 'products.id')
                 ->where('orders.user_id', Auth::user()->id)
-                ->orderBy('order_items.created_at', 'desc')
+                ->orderBy('orders.created_at', 'desc')
                 ->paginate(5);
 
+                // find cart
+        $cart = Cart::where('user_id', Auth::user()->id)->first();
 
-        return view('user.main.history', compact('orders'));
+        // initiate with empty cart items
+        $cart_items = [];
+
+        // if the cart exits, we will fill cart items into it
+        if(!empty($cart)) {
+            $cart_id = $cart->id;
+
+            $cart_items = CartItem::where('cart_id', $cart_id)->get();
+        }
+
+        return view('user.main.history', compact('orders', 'cart_items'));
     }
 
     // password validation function
