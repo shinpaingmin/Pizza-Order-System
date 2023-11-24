@@ -1,6 +1,6 @@
 # Pizza Order System
 ## Database Design
-![pizza_order_system](https://github.com/shinpaingmin/Pizza-Order-System/assets/103930442/30f031d5-de79-4e69-88ec-3ac38b367820)
+![pizza_order_system_new](https://github.com/shinpaingmin/Pizza-Order-System/assets/103930442/bf9a5bb8-b6dc-4b23-91ff-7cb529ff536d)
 
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
