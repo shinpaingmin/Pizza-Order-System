@@ -17,7 +17,8 @@ return new class extends Migration
             $table->string('order_code');
             $table->integer('status')->default(0);   // 0 = pending , 1 = success , 2 = reject
             $table->timestamps();
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('user_id')->references('id')->on('users')
+                    ->onDelete('cascade');
         });
     }
 
