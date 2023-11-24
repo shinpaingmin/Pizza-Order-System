@@ -5,6 +5,7 @@ namespace App\Http\Controllers\User;
 use Carbon\Carbon;
 use App\Models\Cart;
 use App\Models\Order;
+use App\Models\Rating;
 use App\Models\Product;
 use App\Models\CartItem;
 use App\Models\OrderItem;
@@ -16,7 +17,7 @@ class AjaxController extends Controller
 {
     // return pizza list
     public function productList(Request $request) {
-        // logger($request->status);
+
 
         if($request->status === 'asc') {
             $data = Product::orderBy('created_at', 'asc')->get();
@@ -115,10 +116,10 @@ class AjaxController extends Controller
 
         if(count($order) > 0) {
             $response = [
-                'status' => '422',
                 'message' => 'Not available'
             ];
 
+            return response()->json($response, 422);
         }
         else
         {
