@@ -63,17 +63,17 @@
                         </li>
                         <li class="@yield('product') has-sub">
                             <a class="js-arrow text-decoration-none" href="{{ route('product#list') }}">
-                                <i class="fa-solid fa-box col-2"></i> Product
+                                <i class="fa-solid fa-box col-2"></i> Products
                             </a>
                         </li>
                         <li class="@yield('admin') has-sub">
                             <a class="js-arrow text-decoration-none" href="{{ route('admin#list') }}">
-                                <i class="fa fa-users-gear col-2"></i> Admin
+                                <i class="fa fa-users-gear col-2"></i> Admin List
                             </a>
                         </li>
                         <li class="@yield('user') has-sub">
                             <a class="js-arrow text-decoration-none" href="{{ route('admin#userList') }}">
-                                <i class="fa-solid fa-users col-2"></i> User
+                                <i class="fa-solid fa-users col-2"></i> User List
                             </a>
                         </li>
                         <li class="@yield('order') has-sub">
@@ -81,7 +81,16 @@
                                 <i class="fa-solid fa-list-check col-2"></i> Order List
                             </a>
                         </li>
-
+                        <li class="@yield('contact') has-sub">
+                            <a class="js-arrow text-decoration-none" href="{{ route('admin#contactList') }}">
+                                <i class="fa-solid fa-envelope col-2"></i> Contact List
+                            </a>
+                        </li>
+                        <li class="@yield('review') has-sub">
+                            <a class="js-arrow text-decoration-none" href="{{ route('admin#reviewList') }}">
+                                <i class="fas fa-star col-2"></i> Reviews List
+                            </a>
+                        </li>
                     </ul>
                 </nav>
             </div>

@@ -42,11 +42,19 @@
 
     <!-- Main CSS-->
     <link href="{{ asset('admin/css/theme.css') }}" rel="stylesheet" media="all">
-<!-- Fontfaces CSS-->
-<link href="{{ asset('admin/css/font-face.css') }}" rel="stylesheet" media="all">
-<link href="{{ asset('admin/vendor/font-awesome-4.7/css/font-awesome.min.css') }}" rel="stylesheet" media="all">
-<link href="{{ asset('admin/vendor/font-awesome-5/css/fontawesome-all.min.css') }}" rel="stylesheet" media="all">
-<link href="{{ asset('admin/vendor/mdi-font/css/material-design-iconic-font.min.css') }}" rel="stylesheet" media="all">
+
+
+<style>
+    .sub-menu-wrap {
+        max-height: 0px;
+        overflow: hidden;
+        transition: max-height 0.5s;
+
+    }
+    .sub-menu-wrap.open-menu {
+        max-height: 290px;
+    }
+</style>
 </head>
 
 <body>
@@ -77,7 +85,7 @@
                         <div class="navbar-nav mr-auto py-0">
                             <a href="{{ route('user#home') }}" class="nav-item nav-link  @yield('home')">Home</a>
                             <a href="{{ route('user#cartList') }}" class="nav-item nav-link @yield('cart')">My Cart</a>
-                            <a href="contact.html" class="nav-item nav-link @yield('contact')">Contact</a>
+                            <a href="{{ route('user#contactPage') }}" class="nav-item nav-link @yield('contact')">Contact</a>
                         </div>
                         <div class="navbar-nav ml-auto py-0 d-none d-lg-block">
                             <a href="" class="btn px-0">
@@ -93,63 +101,53 @@
                                 <span class="text-warning" style="padding-bottom: 2px;">Order History</span>
                             </a>
                         </div>
-                        <div class="account-wrap ml-5 mt-1">
-                            <div class="account-item clearfix js-item-menu">
-                                <div class="image" style="width: 40px; height: 40px">
+
+                        <div class="image ml-5" style="width: 40px; height: 40px; cursor: pointer">
+                            @if (empty(Auth::user()->image) && Auth::user()->gender === 'male')
+                                <img src="{{ asset('image/male.png') }}" alt="Profile" style="width: 100%; height: 100%" class="img-thumbnail rounded-circle bg-white w-100" onclick="toggleMenu()"/>
+                            @elseif (empty(Auth::user()->image) && Auth::user()->gender === 'female')
+                                <img src="{{ asset('image/female.png') }}" alt="Profile" style="width: 100%; height: 100%" class="img-thumbnail rounded-circle bg-white w-100" onclick="toggleMenu()"/>
+                            @else
+                                <img src="{{ asset('storage/' . Auth::user()->image) }}" alt="Profile" style="width: 100%; height: 100%" class=" rounded-circle bg-white w-100" onclick="toggleMenu()"/>
+                            @endif
+                        </div>
+
+                        <div class="position-absolute sub-menu-wrap" id="subMenu" style="top: 100%; right: 0; width: 320px; z-index: 9999;">
+                            <div class="bg-white" style="padding: 20px; margin: 10px 10px 0">
+                                <div class="d-flex align-items-center">
                                     @if (empty(Auth::user()->image) && Auth::user()->gender === 'male')
-                                        <img src="{{ asset('image/male.png') }}" alt="Profile" class="img-thumbnail bg-white w-100"/>
+                                        <img src="{{ asset('image/male.png') }}" alt="Profile" style="width: 60px; margin-right: 15px"  class="img-thumbnail rounded-circle bg-white"/>
                                     @elseif (empty(Auth::user()->image) && Auth::user()->gender === 'female')
-                                        <img src="{{ asset('image/female.png') }}" alt="Profile" class="img-thumbnail bg-white w-100"/>
+                                        <img src="{{ asset('image/female.png') }}" alt="Profile" style="width: 60px; margin-right: 15px" class="img-thumbnail rounded-circle bg-white"/>
                                     @else
-                                        <img src="{{ asset('storage/' . Auth::user()->image) }}" alt="Profile" class=" rounded-circle bg-white w-100"/>
+                                        <img src="{{ asset('storage/' . Auth::user()->image) }}" style="width: 60px; margin-right: 15px" alt="Profile" class=" rounded-circle bg-white"/>
                                     @endif
-                                </div>
-                                <div class="content">
-                                    <a class="js-acc-btn text-decoration-none text-warning" href="#">{{ Auth::user()->username }}</a>
-                                </div>
-                                <div class="account-dropdown js-dropdown">
-                                    <div class="info clearfix">
-                                        <div class="image">
-                                            <a href="{{ route('user#editProfilePage') }}">
-                                                @if (empty(Auth::user()->image) && Auth::user()->gender === 'male')
-                                                    <img src="{{ asset('image/male.png') }}" alt="Profile" class="img-thumbnail"/>
-                                                @elseif (empty(Auth::user()->image) && Auth::user()->gender === 'female')
-                                                    <img src="{{ asset('image/female.png') }}" alt="Profile" class="img-thumbnail"/>
-                                                @else
-                                                    <img src="{{ asset('storage/' . Auth::user()->image) }}" alt="Profile" class="rounded-circle"/>
-                                                @endif
-                                            </a>
-                                        </div>
-                                        <div class="content">
-                                            <h5 class="name">
-                                                <a href="{{ route('user#editProfilePage') }}" class="text-decoration-none">{{ Auth::user()->username }}</a>
-                                            </h5>
-                                            <span class="email">{{ Auth::user()->email }}</span>
-                                        </div>
-                                    </div>
-                                    <div class="account-dropdown__body">
-                                        <div class="account-dropdown__item">
-                                            <a href="{{ route('user#editProfilePage') }}" class="text-decoration-none">
-                                                <i class="zmdi zmdi-account"></i>Account</a>
-                                        </div>
-                                    </div>
-                                    <div class="account-dropdown__body">
-                                        <div class="account-dropdown__item">
-                                            <a href="{{ route('user#changePasswordPage') }}" class="text-decoration-none">
-                                                <i class="zmdi zmdi-key"></i>Change Password</a>
-                                        </div>
-                                    </div>
-                                    <div class="account-dropdown__footer my-3">
-                                        <form action="{{ route('logout') }}" method="post" class="d-flex justify-content-center">
-                                            @csrf
-                                            <button class="btn bg-dark text-white col-10" type="submit">
-                                                <i class="zmdi zmdi-power"></i> Logout
-                                            </button>
-                                        </form>
+                                    <div>
+                                        <h4 class="" style="font-weight: 500">{{ Auth::user()->username }}</h4>
+                                        <small>{{ Auth::user()->email }}</small>
                                     </div>
                                 </div>
+                                <hr class="" style="height: 1px; margin: 15px 0 10px; border: 0; background-color: #ccc; width: 100%">
+                                <a href="{{ route('user#editProfilePage') }}" class="d-flex align-items-center text-decoration-none text-dark" style="margin: 12px 0; display: inline-block; height: 40px;">
+
+                                    <i class="fa-solid fa-user mr-2"></i> <p class="">Edit Profile</p>
+
+                                </a>
+                                <a href="{{ route('user#changePasswordPage') }}" class="d-flex align-items-center text-decoration-none text-dark" style="margin: 12px 0; display: inline-block; height: 40px;">
+
+                                    <i class="fa-solid fa-key mr-2"></i> <p class="">Change Password</p>
+
+                                </a>
+
+                                <form action="{{ route('logout') }}" method="post"  style="margin: 8px 0; display: inline-block; height: 40px;">
+                                    @csrf
+                                    <button  type="submit" class="d-flex align-items-center text-dark">
+                                        <i class="fa-solid fa-right-from-bracket mr-2"></i> <p class="">Logout</p>
+                                    </button>
+                                </form>
                             </div>
                         </div>
+
                     </div>
                 </nav>
             </div>
@@ -220,9 +218,9 @@
         <div class="row border-top mx-xl-5 py-4" style="border-color: rgba(256, 256, 256, .1) !important;">
             <div class="col-md-6 px-xl-0">
                 <p class="mb-md-0 text-center text-md-left text-secondary">
-                    &copy; <a class="text-primary" href="#">Domain</a>. All Rights Reserved. Designed
+                    &copy; <a class="text-primary" href="#">2023</a>. All Rights Reserved. Developed
                     by
-                    <a class="text-primary" href="https://htmlcodex.com">HTML Codex</a>
+                    <a class="text-primary" href="#">Shin Paing Min</a>
                 </p>
             </div>
             {{-- <div class="col-md-6 px-xl-0 text-center text-md-right">
@@ -250,34 +248,16 @@
     <script src="{{ asset('user/js/main.js') }}"></script>
 
 
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-    <!-- Jquery JS-->
-    <script src="{{ asset('admin/vendor/jquery-3.2.1.min.js') }}"></script>
-    <!-- Bootstrap JS-->
-    {{-- <script src="{{ asset('admin/vendor/bootstrap-4.1/popper.min.js') }}"></script> --}}
-    <script src="{{ asset('admin/vendor/bootstrap-4.1/bootstrap.min.js') }}"></script>
-    <!-- Vendor JS       -->
-    <script src="{{ asset('admin/vendor/slick/slick.min.js') }}">
-    </script>
-    <script src="{{ asset('admin/vendor/wow/wow.min.js') }}"></script>
-    <script src="{{ asset('admin/vendor/animsition/animsition.min.js') }}"></script>
-    <script src="{{ asset('admin/vendor/bootstrap-progressbar/bootstrap-progressbar.min.js') }}">
-    </script>
-    <script src="{{ asset('admin/vendor/counter-up/jquery.waypoints.min.js') }}"></script>
-    <script src="{{ asset('admin/vendor/counter-up/jquery.counterup.min.js') }}">
-    </script>
-    <script src="{{ asset('admin/vendor/circle-progress/circle-progress.min.js') }}"></script>
-    <script src="{{ asset('admin/vendor/perfect-scrollbar/perfect-scrollbar.js') }}"></script>
-    <script src="{{ asset('admin/vendor/chartjs/Chart.bundle.min.js') }}"></script>
-    <script src="{{ asset('admin/vendor/select2/select2.min.js') }}">
-    </script>
-
-    <!-- Main JS-->
-    <script src="{{ asset('admin/js/main.js') }}"></script>
-
     {{-- Jquery  --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <script>
+        let subMenu = document.getElementById('subMenu');
+
+        function toggleMenu() {
+            subMenu.classList.toggle('open-menu');
+        }
+    </script>
 </body>
 
     @yield('scriptSource')

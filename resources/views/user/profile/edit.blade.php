@@ -1,5 +1,11 @@
 @extends('user.layouts.master')
 
+@if (isset($cart_items) && count($cart_items) > 0)
+    @section('cartItems', count($cart_items))
+@else
+    @section('cartItems', 0)
+@endif
+
 @section('content')
         <!-- MAIN CONTENT-->
     <div class="main-content">
@@ -19,7 +25,7 @@
                 </svg>
 
                 @if (session('updateSuccess'))
-                    <div class="col-5 offset-6">
+                    <div class="col-3 offset-8">
                         <div class="alert alert-success d-flex align-items-center alert-dismissible fade show" id="alert" role="alert">
                             <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>
                             <div class="mx-4">

@@ -26,11 +26,6 @@
 
                         @if (isset($categories) && count($categories) > 0)
                             @foreach ($categories as $category)
-                                {{-- <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                                    <input type="checkbox" class="custom-control-input" id="price-1">
-                                    <label class="custom-control-label" for="price-1">{{ $category->category_name }}</label>
-                                    <span class="badge border font-weight-normal">-</span>
-                                </div> --}}
 
                                 <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
 
@@ -43,83 +38,10 @@
                 </div>
                 <!-- Categories End -->
 
-                <!-- Price Start -->
-                <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Filter by price</span></h5>
-                <div class="bg-light p-4 mb-30">
-                    <form>
-                        <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                            <input type="checkbox" class="custom-control-input" checked id="price-all">
-                            <label class="custom-control-label" for="price-all">All Price</label>
-                            <span class="badge border font-weight-normal">1000</span>
-                        </div>
-                        <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                            <input type="checkbox" class="custom-control-input" id="price-1">
-                            <label class="custom-control-label" for="price-1">$0 - $100</label>
-                            <span class="badge border font-weight-normal">150</span>
-                        </div>
-                        <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                            <input type="checkbox" class="custom-control-input" id="price-2">
-                            <label class="custom-control-label" for="price-2">$100 - $200</label>
-                            <span class="badge border font-weight-normal">295</span>
-                        </div>
-                        <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                            <input type="checkbox" class="custom-control-input" id="price-3">
-                            <label class="custom-control-label" for="price-3">$200 - $300</label>
-                            <span class="badge border font-weight-normal">246</span>
-                        </div>
-                        <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                            <input type="checkbox" class="custom-control-input" id="price-4">
-                            <label class="custom-control-label" for="price-4">$300 - $400</label>
-                            <span class="badge border font-weight-normal">145</span>
-                        </div>
-                        <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between">
-                            <input type="checkbox" class="custom-control-input" id="price-5">
-                            <label class="custom-control-label" for="price-5">$400 - $500</label>
-                            <span class="badge border font-weight-normal">168</span>
-                        </div>
-                    </form>
-                </div>
-                <!-- Price End -->
 
-                {{-- <!-- Size Start -->
-                <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Filter by size</span></h5>
-                <div class="bg-light p-4 mb-30">
-                    <form>
-                        <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                            <input type="checkbox" class="custom-control-input" checked id="size-all">
-                            <label class="custom-control-label" for="size-all">All Size</label>
-                            <span class="badge border font-weight-normal">1000</span>
-                        </div>
-                        <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                            <input type="checkbox" class="custom-control-input" id="size-1">
-                            <label class="custom-control-label" for="size-1">XS</label>
-                            <span class="badge border font-weight-normal">150</span>
-                        </div>
-                        <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                            <input type="checkbox" class="custom-control-input" id="size-2">
-                            <label class="custom-control-label" for="size-2">S</label>
-                            <span class="badge border font-weight-normal">295</span>
-                        </div>
-                        <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                            <input type="checkbox" class="custom-control-input" id="size-3">
-                            <label class="custom-control-label" for="size-3">M</label>
-                            <span class="badge border font-weight-normal">246</span>
-                        </div>
-                        <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                            <input type="checkbox" class="custom-control-input" id="size-4">
-                            <label class="custom-control-label" for="size-4">L</label>
-                            <span class="badge border font-weight-normal">145</span>
-                        </div>
-                        <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between">
-                            <input type="checkbox" class="custom-control-input" id="size-5">
-                            <label class="custom-control-label" for="size-5">XL</label>
-                            <span class="badge border font-weight-normal">168</span>
-                        </div>
-                    </form>
-                </div> --}}
-                <div class="">
+                {{-- <div class="">
                     <button class="btn btn btn-warning w-100">Order</button>
-                </div>
+                </div> --}}
 
             </div>
             <!-- Shop Sidebar End -->
@@ -161,24 +83,49 @@
                                 <div class="product-img position-relative overflow-hidden" style="width: 100%; height: 250px">
                                     <img class="img-fluid w-100 h-100 object-cover" src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->product_name }}">
                                     <div class="product-action">
-                                        <a class="btn btn-outline-dark btn-square" href="#"><i class="fa fa-shopping-cart"></i></a>
-                                        {{-- <a class="btn btn-outline-dark btn-square" href=""><i class="far fa-heart"></i></a>
-                                        <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-sync-alt"></i></a>
-                                        <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-search"></i></a> --}}
-                                        <a class="btn btn-outline-dark btn-square" href="{{ route('user#pizzaDetails', $product->id) }}"><i class="fa fa-info-circle"></i></a>
+                                        <a href="#" class="btn btn-outline-dark btn-square"><i class="fas fa-heart"></i></a>
+                                        <a class="btn btn-outline-dark btn-square" href="{{ route('user#pizzaDetails', $product->id) }}"><i class="fa fa-shopping-cart"></i></a>
                                     </div>
                                 </div>
                                 <div class="text-center py-4">
                                     <a class="h6 text-decoration-none text-truncate" href="">{{ $product->product_name }}</a>
-                                    <div class="d-flex align-items-center justify-content-center mt-2">
+                                    <div class="d-flex align-items-center justify-content-center my-2">
                                         <h5>{{ $product->price }} kyats</h5><h6 class="text-muted ml-2"><del>25000</del></h6>
                                     </div>
                                     <div class="d-flex align-items-center justify-content-center mb-1">
-                                        <small class="fa fa-star text-primary mr-1"></small>
-                                        <small class="fa fa-star text-primary mr-1"></small>
-                                        <small class="fa fa-star text-primary mr-1"></small>
-                                        <small class="fa fa-star text-primary mr-1"></small>
-                                        <small class="fa fa-star text-primary mr-1"></small>
+                                        @if (isset($avg_ratings) && count($avg_ratings) > 0)
+                                            @foreach ($avg_ratings as $avg)
+                                                @if ($avg->product_id === $product->id)
+                                                    @for ($i = 0; $i < 5; $i++)
+                                                        @if ($i < $avg->avg_rating)
+                                                            <i class="fa fa-star text-primary mr-1"></i>
+                                                        @else
+                                                            <i class="far fa-star text-primary mr-1"></i>
+                                                        @endif
+                                                    @endfor
+
+                                                    @php
+                                                        $notFound = false;
+                                                        break;
+                                                    @endphp
+                                                @else
+                                                    @php
+                                                        $notFound = true;
+                                                    @endphp
+                                                @endif
+
+                                            @endforeach
+
+                                            @if ($notFound === true)
+                                                <i class="fa-regular fa-star text-primary mr-1"></i>
+                                                <i class="fa-regular fa-star text-primary mr-1"></i>
+                                                <i class="fa-regular fa-star text-primary mr-1"></i>
+                                                <i class="fa-regular fa-star text-primary mr-1"></i>
+                                                <i class="fa-regular fa-star text-primary mr-1"></i>
+
+
+                                            @endif
+                                        @endif
                                     </div>
                                 </div>
                             </div>
@@ -232,9 +179,8 @@
                                     <div class="product-img position-relative overflow-hidden" style="width: 100%; height: 250px">
                                         <img class="img-fluid w-100 h-100 object-cover" src="{{ asset('storage/${res[$i].image}') }}" alt="${res[$i].product_name}">
                                         <div class="product-action">
-                                            <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-shopping-cart"></i></a>
-
-                                            <a class="btn btn-outline-dark btn-square" href="{{ url('user/pizza/details/${res[$i].id}') }}"><i class="fa fa-info-circle"></i></a>
+                                            <a href="#" class="btn btn-outline-dark btn-square"><i class="fas fa-heart"></i></a>
+                                            <a class="btn btn-outline-dark btn-square" href="{{ url('user/pizza/details/${res[$i].id}') }}"><i class="fa fa-shopping-cart"></i></a>
                                         </div>
                                     </div>
                                     <div class="text-center py-4">
@@ -278,9 +224,8 @@
                                     <div class="product-img position-relative overflow-hidden" style="width: 100%; height: 250px">
                                         <img class="img-fluid w-100 h-100 object-cover" src="{{ asset('storage/${res[$i].image}') }}" alt="${res[$i].product_name}">
                                         <div class="product-action">
-                                            <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-shopping-cart"></i></a>
-
-                                            <a class="btn btn-outline-dark btn-square" href="{{ url('user/pizza/details/${res[$i].id}') }}"><i class="fa fa-info-circle"></i></a>
+                                            <a href="#" class="btn btn-outline-dark btn-square"><i class="fas fa-heart"></i></a>
+                                            <a class="btn btn-outline-dark btn-square" href="{{ url('user/pizza/details/${res[$i].id}') }}"><i class="fa fa-shopping-cart"></i></a>
                                         </div>
                                     </div>
                                     <div class="text-center py-4">

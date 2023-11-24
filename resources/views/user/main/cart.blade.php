@@ -136,12 +136,12 @@
                     success: function(res) {
                         if(res.status === 'success') {
                             window.location.href = "http://localhost:8000/user/home";
-                        } else if(res.status = '422') {
-                            location.reload();
                         }
                     },
                     error: function(err) {
-                        console.log(err);
+                        if(err.status === 422) {
+                            location.reload();
+                        }
                     }
                 })
             })
