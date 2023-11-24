@@ -2,12 +2,14 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\RatingController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\User\AjaxController;
+use App\Http\Controllers\User\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -86,6 +88,16 @@ Route::middleware([
             Route::get('/promote/{id}', [AdminController::class, 'promoteAdmin'])->name('admin#promote');
             Route::get('delete/{id}', [AdminController::class, 'deleteUser'])->name('admin#deleteUser');
         });
+
+        // contact
+        Route::prefix('contact')->group(function() {
+            Route::get('/list', [ContactController::class, 'contactList'])->name('admin#contactList');
+        });
+
+        // reviews
+        Route::prefix('review')->group(function() {
+            Route::get('/list', [RatingController::class, 'reviewList'])->name('admin#reviewList');
+        });
     });
 
 
@@ -97,36 +109,42 @@ Route::middleware([
             Route::get('/home', [UserController::class, 'home'])->name('user#home');
             Route::get('/filter/{id}', [UserController::class, 'filter'])->name('user#filter');
             Route::get('order/history', [UserController::class, 'history'])->name('user#history');
+            Route::get('contact/page', [UserController::class, 'contactPage'])->name('user#contactPage');
+            Route::post('contact', [UserController::class, 'contact'])->name('user#contact');
 
             Route::prefix('pizza')->group(function() {
                 Route::get('/details/{id}', [UserController::class, 'pizzaDetails'])->name('user#pizzaDetails');
-
+                Route::post('review', [UserController::class, 'pizzaReview'])->name('user#pizzaReview');
             });
 
+            // cart
             Route::prefix('cart')->group(function() {
                 Route::get('/list', [UserController::class, 'cartList'])->name('user#cartList');
 
             });
 
+            // password change
             Route::prefix('password')->group(function() {
                 Route::get('/change', [UserController::class, 'changePasswordPage'])->name('user#changePasswordPage');
                 Route::post('/change', [UserController::class, 'changePassword'])->name('user#changePassword');
             });
 
+            // profile
             Route::prefix('profile')->group(function() {
                 Route::get('/edit', [UserController::class, 'editProfile'])->name('user#editProfilePage');
                 Route::post('/update/{id}', [UserController::class, 'updateProfile'])->name('user#updateProfile');
             });
 
 
-                Route::prefix('ajax')->group(function() {
-                    Route::post('product/list', [AjaxController::class, 'productList'])->name('ajax#productList');
-                    Route::post('/addToCart', [AjaxController::class, 'addToCart'])->name('ajax#addToCart');
-                    Route::post('/update/cart', [AjaxController::class, 'updateCart'])->name('ajax#updateCart');
-                    Route::post('delete/item', [AjaxController::class, 'deleteItem'])->name('ajax#deleteItem');
-                    Route::post('order', [AjaxController::class, 'order'])->name('ajax#order');
-                    Route::post('increase/viewCount', [AjaxController::class, 'increaseViewCount'])->name('ajax#increaseViewCount');
-                });
+            // ajax routes
+            Route::prefix('ajax')->group(function() {
+                Route::post('product/list', [AjaxController::class, 'productList'])->name('ajax#productList');
+                Route::post('/addToCart', [AjaxController::class, 'addToCart'])->name('ajax#addToCart');
+                Route::post('/update/cart', [AjaxController::class, 'updateCart'])->name('ajax#updateCart');
+                Route::post('delete/item', [AjaxController::class, 'deleteItem'])->name('ajax#deleteItem');
+                Route::post('order', [AjaxController::class, 'order'])->name('ajax#order');
+                Route::post('increase/viewCount', [AjaxController::class, 'increaseViewCount'])->name('ajax#increaseViewCount');
+            });
 
         });
     });
