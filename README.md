@@ -2,6 +2,30 @@
 ## Database Design
 ![pizza_order_system_new](https://github.com/shinpaingmin/Pizza-Order-System/assets/103930442/bf9a5bb8-b6dc-4b23-91ff-7cb529ff536d)
 
+## Homepage
+![screencapture-127-0-0-1-8000-user-home-2023-12-18-23_22_27](https://github.com/shinpaingmin/Pizza-Order-System/assets/103930442/a8dddef5-5fbe-4f22-a1c1-1c018ad470cd)
+
+## Details Page
+![screencapture-127-0-0-1-8000-user-pizza-details-6-2023-12-18-23_25_25](https://github.com/shinpaingmin/Pizza-Order-System/assets/103930442/027038b2-de88-4c8b-a54d-17bffa7a2215)
+
+## Cart Page
+![screencapture-localhost-8000-user-cart-list-2023-12-18-23_26_22](https://github.com/shinpaingmin/Pizza-Order-System/assets/103930442/3c5e8fad-4f4f-4f77-b6ac-578e23c9ebcc)
+
+## Order Page
+![screencapture-127-0-0-1-8000-user-order-history-2023-12-18-23_25_50](https://github.com/shinpaingmin/Pizza-Order-System/assets/103930442/5da90740-a41e-424e-baef-fd4f2b742382)
+
+## Contact Page
+![screencapture-127-0-0-1-8000-user-contact-page-2023-12-18-23_24_56](https://github.com/shinpaingmin/Pizza-Order-System/assets/103930442/0c7d9052-589c-40bc-97a2-623291fe874c)
+
+## Edit Profile Page
+![screencapture-localhost-8000-user-profile-edit-2023-12-18-23_28_59](https://github.com/shinpaingmin/Pizza-Order-System/assets/103930442/ff631982-2732-4c65-8730-1128f9e52ff8)
+
+## Change Password Page
+![screencapture-localhost-8000-user-password-change-2023-12-18-23_29_39](https://github.com/shinpaingmin/Pizza-Order-System/assets/103930442/cb6f4a02-3187-471b-af0a-2803f3db0c16)
+
+## Admin Panel
+![screencapture-127-0-0-1-8000-category-list-2023-12-18-23_31_05](https://github.com/shinpaingmin/Pizza-Order-System/assets/103930442/b5f82a69-f844-4c0d-bc55-06fb6afdc853)
+
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
 <p align="center">
